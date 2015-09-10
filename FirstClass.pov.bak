@@ -19,7 +19,7 @@ light_source {
          
 
 light_source {
-    <100,40,-4> //location
+    <50,40,-4> //location
     rgb<1,1,1>
 }         
          
