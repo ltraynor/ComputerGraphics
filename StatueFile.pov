@@ -12,7 +12,31 @@
     
     }
 }
+
+
+#declare coolCube = box {
+    <-3.5,0,-3.5>
+    <3.5,0.5,3.5>
+    texture {
+        pigment {
+            rgb<1,0,0>
+        }
+    }
+}
+
+
+#declare superSphere = sphere {
+    <0,0,0>
+    1.15   //radius 
+    texture {
+        pigment {
+            rgb<0,1,1>
+        }
+    }
+}    
  
+
+///////////////////////////////////
   
 background {
     rgb<0,0.6,0.75>
@@ -44,7 +68,7 @@ light_source {
 
  
 camera {
-    location<0,10,-60>
+    location<0,15,-50>
     look_at <0,3,0>
 }
  
@@ -60,15 +84,11 @@ plane {
 }  
 
 
-box {
-    <-3.5,0,-3.5>
-    <3.5,0.5,3.5>
-    texture {
-        pigment {
-            rgb<1,0,0>
-        }
-    }
-} 
+/////////////////////////////////
+
+object {
+    coolCube
+}
 
 
 object {
@@ -79,4 +99,261 @@ object {
     coolCone
     rotate<0,0,180>  
     translate<0,22,0>
+} 
+
+//////////////////////////////////
+
+object {
+    coolCube
+    translate<-4,11,0> 
+}
+
+object {
+    coolCube
+    translate<4,11,0>
+}    
+
+object {
+    superSphere
+    translate<0,11,0>
+} 
+
+///////////////////////////////////
+
+object {
+    superSphere
+    translate<-4.5,10,0>
+}  
+
+object {
+    superSphere
+    translate<-4.5,8.5,0>
+}
+
+object {
+    superSphere
+    translate<-4.5,7,0>
+}
+
+object {
+    superSphere
+    translate<-4.5,5.5,0>
+}
+
+object {
+    superSphere
+    translate<-4.5,4,0>
+} 
+
+object {
+    superSphere
+    translate<-4.5,2.5,0>
+}                       
+
+object {
+    superSphere
+    translate<-4.5,1,0>
+}      
+
+//////////////////////////////////
+                                 
+
+object {
+    superSphere
+    translate<4.5,10,0>
+}  
+
+object {
+    superSphere
+    translate<4.5,8.5,0>
+}
+
+object {
+    superSphere
+    translate<4.5,7,0>
+}
+
+object {
+    superSphere
+    translate<4.5,5.5,0>
+}
+
+object {
+    superSphere
+    translate<4.5,4,0>
+} 
+
+object {
+    superSphere
+    translate<4.5,2.5,0>
+}                       
+
+object {
+    superSphere
+    translate<4.5,1,0>
+}  
+
+///////////////////////////////
+
+
+object {
+    superSphere
+    translate<0,11,0>
+}
+
+object {
+    superSphere
+    translate<-7,10,2>
+}  
+
+object {
+    superSphere
+    translate<-7,8.5,2>
+}
+
+object {
+    superSphere
+    translate<-7,7,2>
+}
+
+object {
+    superSphere
+    translate<-7,5.5,2>
+}
+
+object {
+    superSphere
+    translate<-7,4,2>
+} 
+
+object {
+    superSphere
+    translate<-7,2.5,2>
+}                       
+
+object {
+    superSphere
+    translate<-7,1,2>
+}   
+
+///////////////////////////////
+
+object {
+    superSphere
+    translate<0,11,0>
+}
+
+object {
+    superSphere
+    translate<7,10,2>
+}  
+
+object {
+    superSphere
+    translate<7,8.5,2>
+}
+
+object {
+    superSphere
+    translate<7,7,2>
+}
+
+object {
+    superSphere
+    translate<7,5.5,2>
+}
+
+object {
+    superSphere
+    translate<7,4,2>
+} 
+
+object {
+    superSphere
+    translate<7,2.5,2>
+}                       
+
+object {
+    superSphere
+    translate<7,1,2>
+}                               
+
+//////////////////////////////////////
+
+object {
+    superSphere
+    translate<-7,10,-3>
+}  
+
+object {
+    superSphere
+    translate<-7,8.5,-3>
+}
+
+object {
+    superSphere
+    translate<-7,7,-3>
+}
+
+object {
+    superSphere
+    translate<-7,5.5,-3>
+}
+
+object {
+    superSphere
+    translate<-7,4,-3>
+} 
+
+object {
+    superSphere
+    translate<-7,2.5,-3>
+}                       
+
+object {
+    superSphere
+    translate<-7,1,-3>    
+}
+
+//////////////////////////////
+
+
+object {
+    superSphere
+    translate<0,11,0>
+}
+
+object {
+    superSphere
+    translate<7,10,-3>
+}  
+
+object {
+    superSphere
+    translate<7,8.5,-3>
+}
+
+object {
+    superSphere
+    translate<7,7,-3>
+}
+
+object {
+    superSphere
+    translate<7,5.5,-3>
+}
+
+object {
+    superSphere
+    translate<7,4,-3>
+} 
+
+object {
+    superSphere
+    translate<7,2.5,-3>
+}                       
+
+object {
+    superSphere
+    translate<7,1,-3>    
 }
