@@ -1,4 +1,5 @@
-
+//////////////////////////////////////
+//variables on variables
   
 #declare coolCone = cone {
     <0,11,-1> //point 1
@@ -34,9 +35,26 @@
         }
     }
 }    
+
+
+#declare spherePillar = union {
+    
+    #declare index = 10;
+    #while (index >= 1)
+        object {
+            superSphere
+            translate<0,index,0>
+        }
+    
+        #declare index = index - 1.5;  
+    #end
+}
+
+
  
 
 ///////////////////////////////////
+//background lightsource and ground
   
 background {
     rgb<0,0.6,0.75>
@@ -84,7 +102,8 @@ plane {
 }  
 
 
-/////////////////////////////////
+///////////////////////////////// 
+//base and cone hourglass
 
 object {
     coolCube
@@ -102,7 +121,7 @@ object {
 } 
 
 //////////////////////////////////
-
+//make the platforms
 object {
     coolCube
     translate<-4,11,0> 
@@ -113,234 +132,42 @@ object {
     translate<4,11,0>
 }    
 
+//ball in the center
 object {
     superSphere
     translate<0,11,0>
 } 
 
-///////////////////////////////////
+///////////////////////////////////  
+//make the sphere Pillars
 
 object {
-    superSphere
-    translate<-4.5,10,0>
-}  
-
-object {
-    superSphere
-    translate<-4.5,8.5,0>
+    spherePillar
+    translate<-4.5,0,0>
 }
-
-object {
-    superSphere
-    translate<-4.5,7,0>
-}
-
-object {
-    superSphere
-    translate<-4.5,5.5,0>
-}
-
-object {
-    superSphere
-    translate<-4.5,4,0>
-} 
-
-object {
-    superSphere
-    translate<-4.5,2.5,0>
-}                       
-
-object {
-    superSphere
-    translate<-4.5,1,0>
-}      
-
-//////////////////////////////////
                                  
-
-object {
-    superSphere
-    translate<4.5,10,0>
-}  
-
-object {
-    superSphere
-    translate<4.5,8.5,0>
+object { 
+    spherePillar
+    translate<4.5,0,0>
 }
 
 object {
-    superSphere
-    translate<4.5,7,0>
+    spherePillar
+    translate<-7,0,2.25>
 }
 
 object {
-    superSphere
-    translate<4.5,5.5,0>
+    spherePillar
+    translate<7,0,2.25>
 }
 
 object {
-    superSphere
-    translate<4.5,4,0>
-} 
-
-object {
-    superSphere
-    translate<4.5,2.5,0>
-}                       
-
-object {
-    superSphere
-    translate<4.5,1,0>
-}  
-
-///////////////////////////////
-
-
-object {
-    superSphere
-    translate<-7,10,2.25>
-}  
-
-object {
-    superSphere
-    translate<-7,8.5,2.25>
+    spherePillar
+    translate<-7,0,-2.25>
 }
 
 object {
-    superSphere
-    translate<-7,7,2.25>
+    spherePillar
+    translate<7,0,-2.25>
 }
 
-object {
-    superSphere
-    translate<-7,5.5,2.25>
-}
-
-object {
-    superSphere
-    translate<-7,4,2.25>
-} 
-
-object {
-    superSphere
-    translate<-7,2.5,2.25>
-}                       
-
-object {
-    superSphere
-    translate<-7,1,2.25>
-}   
-
-///////////////////////////////
-
-
-object {
-    superSphere
-    translate<7,10,2.25>
-}  
-
-object {
-    superSphere
-    translate<7,8.5,2.25>
-}
-
-object {
-    superSphere
-    translate<7,7,2.25>
-}
-
-object {
-    superSphere
-    translate<7,5.5,2.25>
-}
-
-object {
-    superSphere
-    translate<7,4,2.25>
-} 
-
-object {
-    superSphere
-    translate<7,2.5,2.25>
-}                       
-
-object {
-    superSphere
-    translate<7,1,2.25>
-}                               
-
-//////////////////////////////////////
-
-object {
-    superSphere
-    translate<-7,10,-2.25>
-}  
-
-object {
-    superSphere
-    translate<-7,8.5,-2.25>
-}
-
-object {
-    superSphere
-    translate<-7,7,-2.25>
-}
-
-object {
-    superSphere
-    translate<-7,5.5,-2.25>
-}
-
-object {
-    superSphere
-    translate<-7,4,-2.25>
-} 
-
-object {
-    superSphere
-    translate<-7,2.5,-2.25>
-}                       
-
-object {
-    superSphere
-    translate<-7,1,-2.25>    
-}
-
-//////////////////////////////
-
-
-
-object {
-    superSphere
-    translate<7,10,-2.25>
-}  
-
-object {
-    superSphere
-    translate<7,8.5,-2.25>
-}
-
-object {
-    superSphere
-    translate<7,7,-2.25>
-}
-
-object {
-    superSphere
-    translate<7,5.5,-2.25>
-}
-
-object {
-    superSphere
-    translate<7,4,-2.25>
-} 
-
-object {
-    superSphere
-    translate<7,2.5,-2.25>
-}                       
-
-object {
-    superSphere
-    translate<7,1,-2.25>    
-}
