@@ -68,7 +68,7 @@ light_source {
 
  
 camera {
-    location<0,15,-50>
+    location<0,15,-40>
     look_at <0,3,0>
 }
  
@@ -198,162 +198,149 @@ object {
 
 object {
     superSphere
-    translate<0,11,0>
-}
-
-object {
-    superSphere
-    translate<-7,10,2>
+    translate<-7,10,2.25>
 }  
 
 object {
     superSphere
-    translate<-7,8.5,2>
+    translate<-7,8.5,2.25>
 }
 
 object {
     superSphere
-    translate<-7,7,2>
+    translate<-7,7,2.25>
 }
 
 object {
     superSphere
-    translate<-7,5.5,2>
+    translate<-7,5.5,2.25>
 }
 
 object {
     superSphere
-    translate<-7,4,2>
+    translate<-7,4,2.25>
 } 
 
 object {
     superSphere
-    translate<-7,2.5,2>
+    translate<-7,2.5,2.25>
 }                       
 
 object {
     superSphere
-    translate<-7,1,2>
+    translate<-7,1,2.25>
 }   
 
 ///////////////////////////////
 
-object {
-    superSphere
-    translate<0,11,0>
-}
 
 object {
     superSphere
-    translate<7,10,2>
+    translate<7,10,2.25>
 }  
 
 object {
     superSphere
-    translate<7,8.5,2>
+    translate<7,8.5,2.25>
 }
 
 object {
     superSphere
-    translate<7,7,2>
+    translate<7,7,2.25>
 }
 
 object {
     superSphere
-    translate<7,5.5,2>
+    translate<7,5.5,2.25>
 }
 
 object {
     superSphere
-    translate<7,4,2>
+    translate<7,4,2.25>
 } 
 
 object {
     superSphere
-    translate<7,2.5,2>
+    translate<7,2.5,2.25>
 }                       
 
 object {
     superSphere
-    translate<7,1,2>
+    translate<7,1,2.25>
 }                               
 
 //////////////////////////////////////
 
 object {
     superSphere
-    translate<-7,10,-3>
+    translate<-7,10,-2.25>
 }  
 
 object {
     superSphere
-    translate<-7,8.5,-3>
+    translate<-7,8.5,-2.25>
 }
 
 object {
     superSphere
-    translate<-7,7,-3>
+    translate<-7,7,-2.25>
 }
 
 object {
     superSphere
-    translate<-7,5.5,-3>
+    translate<-7,5.5,-2.25>
 }
 
 object {
     superSphere
-    translate<-7,4,-3>
+    translate<-7,4,-2.25>
 } 
 
 object {
     superSphere
-    translate<-7,2.5,-3>
+    translate<-7,2.5,-2.25>
 }                       
 
 object {
     superSphere
-    translate<-7,1,-3>    
+    translate<-7,1,-2.25>    
 }
 
 //////////////////////////////
 
 
-object {
-    superSphere
-    translate<0,11,0>
-}
 
 object {
     superSphere
-    translate<7,10,-3>
+    translate<7,10,-2.25>
 }  
 
 object {
     superSphere
-    translate<7,8.5,-3>
+    translate<7,8.5,-2.25>
 }
 
 object {
     superSphere
-    translate<7,7,-3>
+    translate<7,7,-2.25>
 }
 
 object {
     superSphere
-    translate<7,5.5,-3>
+    translate<7,5.5,-2.25>
 }
 
 object {
     superSphere
-    translate<7,4,-3>
+    translate<7,4,-2.25>
 } 
 
 object {
     superSphere
-    translate<7,2.5,-3>
+    translate<7,2.5,-2.25>
 }                       
 
 object {
     superSphere
-    translate<7,1,-3>    
+    translate<7,1,-2.25>    
 }
