@@ -1,4 +1,5 @@
-
+//////////////////////////////////////
+//variables on variables
   
 #declare coolCone = cone {
     <0,11,-1> //point 1
@@ -34,9 +35,58 @@
         }
     }
 }    
+
+
+#declare terrificTorus = torus {
+    5.5 //outer radius
+    0.65 //inner radius
+    //translate <0,0.5,0>
+    texture {
+        pigment {
+            rgb <0.5,0.5,0.5>
+        }
+    }
+}
+
+
+#declare goldenTorus = torus {
+    5.5 //outer radius
+    0.65 //inner radius
+    //translate <0,0.5,0>
+    texture {
+        pigment {
+            rgb <1,1,0>
+        }
+    }
+}
+
+
+#declare spherePillar = union {
+    
+    #declare index = 10;
+    #while (index >= 1)
+        object {
+            superSphere
+            translate<0,index,0>
+        }
+    
+        #declare index = index - 1.5;  
+    #end
+}
+
+#declare cubeForPyramid = box {
+    <0,0,0>
+    <2.3, 2.3, 2.3>
+    texture {
+        pigment {
+            rgb<1,0,0>
+        }
+    }
+}
  
 
 ///////////////////////////////////
+//background lightsource and ground
   
 background {
     rgb<0,0.6,0.75>
@@ -61,14 +111,29 @@ light_source {
 } 
 
  
- light_source {
+light_source {
     <0,20,10> //location
     rgb<1,1,1>
 }   
+ 
+ 
+light_source {
+    <0,5,10> //location
+    rgb<1,1,1>
+}    
 
+light_source {
+    <0,5,-10> //location
+    rgb<1,1,1>
+}    
+
+light_source {
+    <0,10,-40> //location
+    rgb<1,1,1>
+}    
  
 camera {
-    location<0,15,-50>
+    location<0,20,-60>
     look_at <0,3,0>
 }
  
@@ -84,7 +149,8 @@ plane {
 }  
 
 
-/////////////////////////////////
+///////////////////////////////// 
+//base and cone hourglass
 
 object {
     coolCube
@@ -102,7 +168,7 @@ object {
 } 
 
 //////////////////////////////////
-
+//make the platforms
 object {
     coolCube
     translate<-4,11,0> 
@@ -113,247 +179,96 @@ object {
     translate<4,11,0>
 }    
 
+//ball in the center
 object {
     superSphere
     translate<0,11,0>
 } 
+
 
 ///////////////////////////////////
+//torus rings
 
 object {
-    superSphere
-    translate<-4.5,10,0>
-}  
-
-object {
-    superSphere
-    translate<-4.5,8.5,0>
-}
-
-object {
-    superSphere
-    translate<-4.5,7,0>
-}
-
-object {
-    superSphere
-    translate<-4.5,5.5,0>
-}
-
-object {
-    superSphere
-    translate<-4.5,4,0>
+    terrificTorus
+    rotate <0,0,55> 
+    translate <0.5,12,0>
+    
 } 
 
 object {
-    superSphere
-    translate<-4.5,2.5,0>
-}                       
-
-object {
-    superSphere
-    translate<-4.5,1,0>
-}      
-
-//////////////////////////////////
-                                 
-
-object {
-    superSphere
-    translate<4.5,10,0>
-}  
-
-object {
-    superSphere
-    translate<4.5,8.5,0>
+    terrificTorus
+    rotate <0,0,-55>
+    translate <-0.5,12,0>
 }
 
 object {
-    superSphere
-    translate<4.5,7,0>
+    goldenTorus
+    translate <0,19.5,0> 
+    scale <0.7,0,0> 
 }
 
 object {
-    superSphere
-    translate<4.5,5.5,0>
-}
-
-object {
-    superSphere
-    translate<4.5,4,0>
-} 
-
-object {
-    superSphere
-    translate<4.5,2.5,0>
-}                       
-
-object {
-    superSphere
-    translate<4.5,1,0>
-}  
-
-///////////////////////////////
-
-
-object {
-    superSphere
-    translate<0,11,0>
-}
-
-object {
-    superSphere
-    translate<-7,10,2>
-}  
-
-object {
-    superSphere
-    translate<-7,8.5,2>
-}
-
-object {
-    superSphere
-    translate<-7,7,2>
-}
-
-object {
-    superSphere
-    translate<-7,5.5,2>
-}
-
-object {
-    superSphere
-    translate<-7,4,2>
-} 
-
-object {
-    superSphere
-    translate<-7,2.5,2>
-}                       
-
-object {
-    superSphere
-    translate<-7,1,2>
+    goldenTorus
+    translate <0,17,0>
+    scale <0.5,0,0>
 }   
 
-///////////////////////////////
-
 object {
-    superSphere
-    translate<0,11,0>
+    goldenTorus
+    translate <0,14.5,0>
+    scale <0.4,0,0>
 }
 
 object {
-    superSphere
-    translate<7,10,2>
-}  
+    goldenTorus
+    translate <0,23,0>
+    scale <1.5,0,0>
+}
+
+///////////////////////////////////  
+//make the sphere Pillars
 
 object {
-    superSphere
-    translate<7,8.5,2>
+    spherePillar
+    translate<-4.5,0,0>
+}
+                                 
+object { 
+    spherePillar
+    translate<4.5,0,0>
 }
 
 object {
-    superSphere
-    translate<7,7,2>
+    spherePillar
+    translate<-7,0,2.25>
 }
 
 object {
-    superSphere
-    translate<7,5.5,2>
+    spherePillar
+    translate<7,0,2.25>
 }
 
 object {
-    superSphere
-    translate<7,4,2>
-} 
-
-object {
-    superSphere
-    translate<7,2.5,2>
-}                       
-
-object {
-    superSphere
-    translate<7,1,2>
-}                               
-
-//////////////////////////////////////
-
-object {
-    superSphere
-    translate<-7,10,-3>
-}  
-
-object {
-    superSphere
-    translate<-7,8.5,-3>
+    spherePillar
+    translate<-7,0,-2.25>
 }
 
 object {
-    superSphere
-    translate<-7,7,-3>
+    spherePillar
+    translate<7,0,-2.25>
 }
 
-object {
-    superSphere
-    translate<-7,5.5,-3>
-}
-
-object {
-    superSphere
-    translate<-7,4,-3>
-} 
-
-object {
-    superSphere
-    translate<-7,2.5,-3>
-}                       
-
-object {
-    superSphere
-    translate<-7,1,-3>    
-}
-
-//////////////////////////////
-
-
-object {
-    superSphere
-    translate<0,11,0>
-}
-
-object {
-    superSphere
-    translate<7,10,-3>
-}  
-
-object {
-    superSphere
-    translate<7,8.5,-3>
-}
-
-object {
-    superSphere
-    translate<7,7,-3>
-}
-
-object {
-    superSphere
-    translate<7,5.5,-3>
-}
-
-object {
-    superSphere
-    translate<7,4,-3>
-} 
-
-object {
-    superSphere
-    translate<7,2.5,-3>
-}                       
-
-object {
-    superSphere
-    translate<7,1,-3>    
+/////////////////////////////////////
+//try out the cones
+    
+difference {    
+    object { 
+        cubeForPyramid
+        translate <0,10,-35>
+    }
+    object {
+        cubeForPyramid
+        translate<0,9,-35>
+    }  
 }
