@@ -1,4 +1,8 @@
 
+background {
+    rgb<0,1,1>
+}
+
 //Dimension variables                      
 #declare RoomWidth = 632;
 #declare RoomHeight = 335;
@@ -64,6 +68,7 @@ light_source {
 }
 
 
+////////////////////////////////////////////////////////////////////////////
 //couch stuff
 #declare armRestWidth = 23.5;
 #declare armRestLength = 89;
@@ -75,16 +80,74 @@ light_source {
 
 #declare frameHeight = 65;
 #declare frameBottomHeight = 23;
-#declare frameBottomWidth = ((2*armRestWidth) + (2*seatCushionWidth));
+#declare frameBottomWidth = (2*seatCushionWidth);
 #declare backCushionHeight = 38;
 
 #declare frameBottomBox = box {
     <0,0,0>
-    <frameBottomWidth,frameBottomHeight,(seatCushionLength + seatCushionWidth)>
+    <frameBottomWidth,frameBottomHeight,seatCushionLength>
 }
 
+#declare frameBackBox = box {
+    <0,0,0>
+    <frameBottomWidth,seatCushionLength,frameBottomHeight>
+}
+
+#declare seatCushion = box {
+    <0,0,0>
+    <seatCushionWidth, seatCushionHeight, seatCushionLength>
+}
+
+#declare backCushion = box {
+    <0,0,0>
+    <seatCushionWidth, seatCushionLength, seatCushionHeight>
+}
+
+#declare armRest = box {
+    <0,0,0>
+    <armRestWidth, armRestHeight, armRestLength>
+}
+
+
+
+
+union {
+    object {
+        frameBottomBox
+    }
+    object {
+        frameBackBox
+        translate<0,0,(seatCushionLength/2)>
+    }
+    object {
+        armRest
+        translate<seatCushionWidth,0,0>
+    }
+    object {
+        armRest
+        translate<-seatCushionWidth,0,0>
+    }
+    object {
+        seatCushion
+        translate<(seatCushionWidth/2),(frameBottomHeight + 1), 0>
+    }
+    object {
+        seatCushion
+        translate<(-seatCushionWidth/2),(frameBottomHeight + 1), 0>
+    }
+    object {
+        backCushion
+        translate<(seatCushionWidth/2), (frameBottomHeight + seatCushionHeight),((seatCushionLength/2) - frameBottomHeight)>
+    } 
+    object {
+        backCushion
+        translate<(-seatCushionWidth/2), (frameBottomHeight + seatCushionHeight),((seatCushionLength/2) - frameBottomHeight)>
+    }
+}
+
+/*
 //the room
-/*difference {
+difference {
     object {
         CATLab
         scale 1.01
@@ -103,4 +166,4 @@ light_source {
             rgb<1,1,1>
         }
     }
-} 
+}*/ 

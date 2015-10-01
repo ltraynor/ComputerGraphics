@@ -57,8 +57,8 @@ background {
 
 //camera
 camera {
-    location Justin
-    look_at Margaret
+    location <30,100,160>
+    look_at <0,0,0>
 }
 
 //light source
@@ -83,29 +83,50 @@ light_source {
 #declare frameBottomWidth = (2*seatCushionWidth);
 #declare backCushionHeight = 38;
 
+#declare couchTexture = texture {
+    pigment {
+        rgb<1,1,1>
+    }
+}
+
 #declare frameBottomBox = box {
     <0,0,0>
     <frameBottomWidth,frameBottomHeight,seatCushionLength>
+    texture {
+        couchTexture
+    }
 }
 
 #declare frameBackBox = box {
     <0,0,0>
-    <frameBottomWidth,seatCushionLength,frameBottomHeight>
+    <frameBottomWidth,seatCushionLength,frameBottomHeight> 
+    texture {
+        couchTexture
+    }
 }
 
 #declare seatCushion = box {
     <0,0,0>
     <seatCushionWidth, seatCushionHeight, seatCushionLength>
+    texture {
+        couchTexture
+    }
 }
 
 #declare backCushion = box {
     <0,0,0>
     <seatCushionWidth, seatCushionLength, seatCushionHeight>
+   texture {
+        couchTexture
+    }
 }
 
 #declare armRest = box {
     <0,0,0>
     <armRestWidth, armRestHeight, armRestLength>
+    texture {
+        couchTexture
+    }
 }
 
 
