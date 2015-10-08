@@ -27,7 +27,7 @@ background {
 
 
 //Door Variables
-#declare DoorHeight = 220;
+#declare DoorHeight = 228;
 #declare DoorWidth = 75;
 #declare DoorDepth = 8;
 
@@ -42,7 +42,7 @@ background {
 #declare DoorwayCutout = box {
     <0,0,-DoorDepth>
     <DoorWidth, DoorHeight, DoorDepth>
-    translate<RoomWidth-DoorDistanceFromRightWall-70,0.5,RoomLength>
+    translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
 };
 
 
@@ -50,12 +50,12 @@ background {
 #declare ClosetBox = box {
     <0,0,0>
     <ClosetWidth,RoomHeight,ClosetDepth>
-    translate<RoomWidth-ClosetWidth,0,RoomLength>  
+    //translate<RoomWidth-ClosetWidth,0,RoomLength>  
 }
-/*#declare ClosetCutoutWall = box {
+#declare ClosetCutoutWall = box {
     <0,0,0>
-    <ClosetWidth,RoomHeight,DoorDepth>
-    translate<0,0,-ClosetDepth/2>    
+    <ClosetWidth-10,RoomHeight-5,ClosetDepth>
+    translate<0,0,0>    
 }
 #declare Closet = difference {
     object {
@@ -65,7 +65,7 @@ background {
         ClosetCutoutWall
     }
     translate<RoomWidth-ClosetWidth,0,RoomLength>        
-}*/ 
+} 
 
 
 //Let's make the window
@@ -88,20 +88,20 @@ background {
 camera {
     location Margaret
     look_at Justin
-    //location Justin
+    //locaton Justin
     //look_at Margaret
 }
 
 //light source
 light_source {
-    <HalfRoomWidth,SeatedEyeHeight,HalfRoomLength>
+    <HalfRoomWidth,400,HalfRoomLength>
     rgb<1,1,1>
 }
 
 
 
 
-
+/*
 //the room
 union {
     difference {
@@ -118,7 +118,7 @@ union {
         object {
             WindowCutout
         } 
-        ClosetBox
+        Closet
         texture {
             pigment {
                 rgb<1,1,1>
@@ -126,7 +126,7 @@ union {
         }
     }
     object {
-        ClosetBox
+        Closet
         texture {
             pigment {
                 rgb<1,0,1>
@@ -134,7 +134,7 @@ union {
         }
     }
 }
- 
+*/ 
 /* 
 difference {
     object {
@@ -162,13 +162,26 @@ difference {
 */   
 
 
-/*
+difference {
 object {
-    Closet
+    ClosetBox
     texture {
         pigment {
             rgb<1,1,1>
         }
     }
+    translate <RoomWidth-300, 0, RoomLength>
 }
-*/ 
+
+object {
+    ClosetCutoutWall  
+    texture {
+        pigment {
+            rgb<1,1,1>
+        }
+    } 
+    translate <RoomWidth-300, 0, RoomLength> 
+    translate<5,0.5,-5>
+}
+}
+ 
