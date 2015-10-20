@@ -2,60 +2,12 @@
  
  
 //declaring my stuff here
-#declare brickPigment = pigment {
-    brick
-    color Red
-    color Green
-    scale 0.1
-}
-
-#declare checkerPigment = pigment {
-    checker
-    color Black
-    color White
-    scale 0.1
-}
-
-#declare hexagonPigment = pigment {
-    hexagon
-    color Blue
-    color Gray
-    color Brown
-    scale 0.1
-}
-
-/* 
-//dont have a Box declared to use for this object pigment
-#declare ObjectPigment = pigment {
-    object {
-        Box
-        color Red
-        color Blue
-    }             
-    turbulence 0.1
-}
-*/
-
 #declare ColorMap =  color_map {
         [0 color Red]
         //[0.5 color Yellow]
         //[0.6 color Green]
         [0.9 color Blue] 
-};
-
-#declare PigmentMap = pigment_map {
-    [0 pigment{color_map{ColorMap}}]
-    [0.5  pigment{color_map{ColorMap}]
-}; 
-
-#declare ultimatePigmentMap = pigment_map { 
-    [0 brickPigment]
-    [0.33 checkerPigment]
-    [0.66 hexagonPigment]
-    wood
-    turbulence 0.05
 }
-
  
 
 

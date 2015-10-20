@@ -52,13 +52,15 @@ object {
 }
 */
 
-object {SpotLight}
+object {SpotLight
+    rotate<0,0,-20>}
+    //translate<100,0,0>}
 
-object {DirectionalLight}
+//object {DirectionalLight}
 
-object {AreaLight}
+//object {AreaLight}
 
-object {ShadowlessLight}
+//object {ShadowlessLight}
 
 object{
       fruit_
