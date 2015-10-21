@@ -45,22 +45,24 @@ camera {
     
 } 
 
-/*
+
 object {
     PointLight
-    translate<-500,200,0>
+    translate<-100,200,0>
 }
-*/
 
+
+/*
 object {SpotLight
     rotate<0,0,-20>}
     //translate<100,0,0>}
-
+*/
 //object {DirectionalLight}
 
 //object {AreaLight}
 
 //object {ShadowlessLight}
+
 
 object{
       fruit_
