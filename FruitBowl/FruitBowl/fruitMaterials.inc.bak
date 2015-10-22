@@ -7,6 +7,10 @@
         along the way; as well as including a story about the fruit within the comments
         to add a little bit of spice while you read. (warning the story isnt all that 
         exciting or in depth, also kind of sporadic)
+        I did however, for the most part, leave the finishes unchanged (because I thought 
+        they looked good) but it is pretty obvious which ones I messed with.  I also did
+        not bother changing the stems at all because whatever I did was either not 
+        noticeable or barely notable at all.
 */
 //========================================================================================
 #include "colors.inc" 

@@ -11,6 +11,8 @@
         they looked good) but it is pretty obvious which ones I messed with.  I also did
         not bother changing the stems at all because whatever I did was either not 
         noticeable or barely notable at all.
+        ALSO I tried to make the checkered banana into a grid but didn't have so much luck
+        -- I will continue to play around with this.
 */
 //========================================================================================
 #include "colors.inc" 
