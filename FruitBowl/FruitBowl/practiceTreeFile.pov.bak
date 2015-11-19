@@ -4,11 +4,19 @@ background {
     rgb<0,1,1>
 }
 
+
 camera {
-    location <-100, 900, -550>
-    look_at <-100,300,0>
+    location <-2300, 900, 0>
+    look_at <0,300,0>
 }
 
+
+/*
+camera {
+    location <-300, 650, -500>
+    look_at <-300,300,0>
+}
+*/
 
 light_source {
     <0,10000,0>
@@ -116,9 +124,69 @@ light_source {
     }
 }
 
+#declare Roots5 = merge {
+    object {
+        Roots4
+    }
+    object {
+        Roots
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        transform{rootScaleTransform} 
+        transform{rootScaleTransform}
+        scale<1.2,0.5,1.2>
+        rotate<0,0,30>
+        rotate<-30,0,0>
+        rotate<0,20,0>
+        translate<-250,805,-250>
+    }
+}
+    
+#declare Roots6 = merge {
+    object {
+        Roots5
+    }
+    object {
+        Roots
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        transform{rootScaleTransform} 
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        scale<0,0.35,0>
+        rotate<0,0,30>
+        rotate<-30,0,0>
+        rotate<0,50,0>
+        translate<-317,876,-273>
+    }
+}
+
+#declare Roots7 = merge {
+    object {
+        Roots6
+    }
+    object {
+        Roots
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        transform{rootScaleTransform} 
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        transform{rootScaleTransform}
+        scale<0,0.35,0>
+        rotate<0,0,30>
+        rotate<-50,0,0>
+        rotate<0,90,0>
+        translate<-360,920,-260>    
+    }
+}
+        
+        
+
 
 object {
-    Roots4
+    Roots7
     //rotate <-90,0,0>
     transform{rootWarpTransform}
+    //scale<1,1.5,1>
 }

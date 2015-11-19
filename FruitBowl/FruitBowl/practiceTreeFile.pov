@@ -6,8 +6,8 @@ background {
 
 
 camera {
-    location <-2300, 900, 0>
-    look_at <0,300,0>
+    location <-1300, 1300, 1000>
+    look_at <-300,300,0>
 }
 
 
@@ -74,44 +74,29 @@ light_source {
     }
 }
 
-#declare Roots2 = merge {
-    object {
-        Roots
-    }
+#declare rootPiece2 = object {
     object {
         Roots
         transform{rootScaleTransform}
         rotate<0,0,20>
-        translate<-40,335,0>
+        translate<-40,335,0>        
     }
 }
 
-#declare Roots3 = merge {
+#declare rootPiece3 = object {
     object {
-        Roots2
-    }
-    object {
-        Roots
-        transform{rootScaleTransform}
-        transform{rootScaleTransform}
-        rotate<0,0,40>
-        rotate<0,-60,0>
-        translate<-150,600,10>
+       Roots
+       transform{rootScaleTransform}
+       transform{rootScaleTransform}
+       rotate<0,0,25>
+       rotate<0,-60,0>
+       translate<-150,600,10>
     }
 }
 
-#declare Roots4 = merge {
+
+#declare rootPiece4 = object {
     object {
-        Roots3
-    }
-    object {
-        /*
-        Roots3
-        scale<0.5,0.5,0.5>
-        rotate<0,0,30>
-        rotate<0,90,0>
-        translate<-180,700,-70>
-        */
         Roots
         transform{rootScaleTransform}
         transform{rootScaleTransform}
@@ -121,13 +106,11 @@ light_source {
         rotate<-80,0,0>
         rotate<0,-30,0>
         translate<-245,800,-150>
-    }
+   }
 }
+   
 
-#declare Roots5 = merge {
-    object {
-        Roots4
-    }
+#declare rootPiece5 = object {
     object {
         Roots
         transform{rootScaleTransform}
@@ -141,11 +124,8 @@ light_source {
         translate<-250,805,-250>
     }
 }
-    
-#declare Roots6 = merge {
-    object {
-        Roots5
-    }
+
+#declare rootPiece6 = object {
     object {
         Roots
         transform{rootScaleTransform}
@@ -161,10 +141,7 @@ light_source {
     }
 }
 
-#declare Roots7 = merge {
-    object {
-        Roots6
-    }
+#declare rootPiece7 = object {
     object {
         Roots
         transform{rootScaleTransform}
@@ -180,13 +157,106 @@ light_source {
         translate<-360,920,-260>    
     }
 }
+
+#declare Roots2 = merge {
+    object {
+        Roots
+    }
+    object {
+        rootPiece2
+    /*
+        Roots
+        transform{rootScaleTransform}
+        rotate<0,0,20>
+        translate<-40,335,0>
+    */
+    }
+}
+
+#declare Roots3 = merge {
+    object {
+        Roots2
+    }
+    object {
+        rootPiece3
+    }
+}
+
+#declare Roots4 = merge {
+    object {
+        Roots3
+    }
+    object {
+        rootPiece4
+    }
+}
+
+#declare Roots5 = merge {
+    object {
+        Roots4
+    }
+    object {
+        rootPiece5
+    }
+}
+    
+#declare Roots6 = merge {
+    object {
+        Roots5
+    }
+    object {
+        rootPiece6
+    }
+}
+
+#declare Roots7 = merge {
+    object {
+        Roots6
+    }
+    object {
+        rootPiece7
+    }
+}
         
         
+#declare rootSegment1 = object {
+    object {
+        Roots3
+    }
+}
+
+#declare rootSegment2 = merge {
+    object {
+        rootPiece4
+    }
+    object {
+        rootPiece5
+    }
+    object {
+        rootPiece6
+    }
+    object {
+        rootPiece7
+    }
+}
+
+#declare rooots = merge {
+    object {
+        rootSegment1
+    }
+    object {
+        rootSegment2
+        rotate<0,0,-0.5>
+        rotate<0,0,0>
+        translate<30,25,60>
+    }
+}
 
 
 object {
-    Roots7
+    rooots
+    //Roots7
     //rotate <-90,0,0>
     transform{rootWarpTransform}
-    //scale<1,1.5,1>
+    //scale<1,1.2,1>
 }
