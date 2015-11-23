@@ -1,4 +1,5 @@
-
+#include "colors.inc"
+ 
 background {
     rgb<0,1,1>
 }
@@ -56,21 +57,25 @@ background {
 #declare DeskGapDrawerHeight = 8;
 #declare DeskDrawerHeight = 17;
 #declare DeskDrawerWidth = 36;
+#declare SpaceBetweenDeskDrawers = 2;
+
+//Curtain Variables
+#declare curtainTubeLength = (RoomWidth/2) - 10;
+#declare curtainTubeRadius = 2;
                                                                                        
                                                                                        
 ///////////////////////////////////////////////////////////////////////////////////////
 //define individual components of room 
  
  
-//Let's make the door 
+//------------------------------------------Let's make the door 
 //this is the threshold
 #declare DoorDistanceFromRightWall = spaceBetweenDoorAndCloset + ClosetWidth;
 #declare DoorwayCutout = box {
     <0,0,-DoorDepth>
     <DoorWidth, DoorHeight, DoorDepth>
     translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
-};
-  
+}; 
   
 //this is the actual door
 #declare OpenDoor = object {
@@ -86,11 +91,10 @@ background {
 };
 
 
-//Let's make the closet
+//--------------------------------------------Let's make the closet
 #declare ClosetBox = box {
     <0,0,0>
-    <ClosetWidth,RoomHeight,ClosetDepth>
-    //translate<RoomWidth-ClosetWidth,0,RoomLength>  
+    <ClosetWidth,RoomHeight,ClosetDepth>  
 }
 #declare ClosetCutoutWall = box {
     <0,0,0>
@@ -115,12 +119,11 @@ background {
         }
         translate<5,0.5,-5>
     }
-    translate<RoomWidth-ClosetWidth,0,RoomLength>
-    //translate <RoomWidth-300, 0, RoomLength>        
+    translate<RoomWidth-ClosetWidth,0,RoomLength>       
 } 
 
 
-//Let's make the window
+//----------------------------------------Let's make the window
 #declare WindowCutout = box {
     <0,0,-DoorDepth/2>
     <RoomWidth,WindowHeight,DoorDepth/2>
@@ -128,7 +131,7 @@ background {
 }
 
 
-//Let's make the little ledge under the window
+//-------------------Let's make the little ledge under the window
 #declare littleWindowLedge = box {
     <0,0,0>
     <RoomWidth,littleWindowLedgeHeight,littleWindowLedgeLength>
@@ -140,7 +143,7 @@ background {
     translate<0,WindowDistanceFromGround,0>
 } 
 
-//Let's make the radiator
+//-------------------------------------Let's make the radiator
 #declare Radiator = box {
     <0,0,0>
     <RoomWidth,RadiatorHeight,littleWindowLedgeLength - 1>
@@ -152,17 +155,100 @@ background {
     translate<0,RadiatorDistanceFromGround,0>
 }
 
-//Let's make the desk!
-#declare Desk = box {
+//-----------------------------------Let's make the desk!
+#declare deskBox = box {
+        <0,0,0>
+        <DeskWidth,DeskHeight,DeskLength>
+        texture {
+            pigment {  
+                rgb <0,1,0>
+            }
+            
+        }        
+}
+#declare deskGap = box {
     <0,0,0>
-    <DeskWidth,DeskHeight,DeskLength>
-    texture {
-        pigment {  
-            rgb <0,1,0>
+    <DeskGapWidth, DeskGapHeight+DeskGapDrawerHeight, DeskLength>
+}
+#declare deskCutout = difference {
+    object {
+        deskBox
+    }
+    object {
+        deskGap
+        translate<DeskDrawerWidth,0,0>
+        texture {
+            pigment {
+                rgbt<1,1,1,1>
+            }
         }
     }
-    translate<20,0,littleWindowLedgeLength>        
 }
+#declare deskGapDrawer = difference {
+    box {
+        <0,0,0>
+        <DeskGapWidth-1,DeskGapDrawerHeight,DeskLength>
+        texture { pigment {color Red}}
+    }
+    box {
+        <0,0,0>
+        <(DeskGapWidth/3)*2, DeskGapDrawerHeight/2, DeskLength>
+        texture { pigment{ rgbt<1,1,1,1>}}
+        translate<DeskGapWidth/6,DeskGapDrawerHeight/2,0>
+    }
+    translate<DeskDrawerWidth,DeskGapHeight,1>     
+}
+#declare deskDrawer = box {
+    <0,0,0>
+    <DeskDrawerWidth-1,DeskDrawerHeight,DeskLength>
+    texture {pigment {color Red}}
+}
+#declare deskDrawers = union {
+    #declare i = 0;
+    #while (i<3) 
+        object {
+            deskDrawer
+            translate<0,SpaceBetweenDeskDrawers*i + DeskDrawerHeight*i + 2,1>
+        }
+        #declare i = i + 1;
+    #end    
+}
+
+#declare Desk = union {
+    object {
+        deskCutout
+    }
+    object {
+        deskGapDrawer
+    }
+    object {
+        deskDrawers
+    }
+    translate<20,0,littleWindowLedgeLength+2>
+}
+
+//-------------------Let's make the rolled up curtains! 
+#declare curtainTube = cylinder {
+    <0,0,0>
+    <0,curtainTubeLength,0>
+    curtainTubeRadius
+    texture{pigment{color Orange}}
+    //rotate<0,0,90>
+    //translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
+}
+#declare Curtains = union {
+    object {
+        curtainTube
+    }
+    object {
+        curtainTube
+        translate<0,curtainTubeLength+15,0>
+    }
+    texture{pigment{color Orange}}
+    rotate<0,0,90>
+    translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 //lights, camera, but no action :(
@@ -180,8 +266,8 @@ camera {
     //look_at DoorwayView
     location DoorwayView
     look_at WindowView 
-    //location<100,200,30>
-    //look_at<0,100,-10>
+    //location<100,20,100>
+    //look_at<10,10,10>
 }
 
 //light source
@@ -191,7 +277,7 @@ light_source {
 }
 
 light_source {
-    <HalfRoomWidth,150,HalfRoomLength>
+    <HalfRoomWidth,100,HalfRoomLength>
     rgb<1,1,1>
 }
  
@@ -199,34 +285,6 @@ light_source {
 
 /////////////////////////////////////////////////////////////////////////////
 //define the room with everything in it
-
-
-/*
-//the room
-difference {
-    object {
-        dormRoom
-        scale 1.01
-    }
-    object {
-        dormRoom
-    }
-    object {
-        DoorwayCutout
-    }
-    object {
-        WindowCutout
-    }     
-    object {
-        Closet
-    }
-     texture {
-        pigment {
-            rgb<1,1,1>
-        }
-    }
-}
-*/
 
  
 #declare myRoom = union { 
@@ -251,7 +309,7 @@ difference {
         }
         texture {
             pigment {
-                rgb<0.75,0.75,0.75>
+                rgb<0.55,0.55,0.55>
             }
         }
     }
@@ -270,33 +328,12 @@ difference {
     object {
         Desk
     }
-}
-
-/*
-difference {
     object {
-        ClosetBox
-        texture {
-            pigment {
-                rgb<1,1,1>
-            }
-        }
-        translate <RoomWidth-300, 0, RoomLength>
-    }
-
-    object {
-        ClosetCutoutWall  
-        texture {
-            pigment {
-                rgb<1,1,1>
-            }
-        } 
-        translate <RoomWidth-300, 0, RoomLength> 
-        translate<5,0.5,-5>
+        Curtains
     }
 }
-*/ 
 
+//-----------------------------------------------------------------------//
 
 object {
     myRoom
