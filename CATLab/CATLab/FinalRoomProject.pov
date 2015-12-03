@@ -96,9 +96,26 @@ background {
 #declare PosterWidth = 35;
 #declare FlagHeight = 90;
 #declare FlagWidth = 150;
-#declare smallMirrorDistanceFromGround = 135;
-#declare tallMirrorDistanceFromGround = 80;
-#declare postersDistanceFromGround = 140;
+#declare SmallMirrorDistanceFromGround = 135;
+#declare TallMirrorDistanceFromGround = 80;
+#declare PostersDistanceFromGround = 140;
+
+//Bed Variables
+#declare BedWidth = 105;
+#declare BedLength = 205;
+#declare MattressHeight = 15;
+#declare MetalFrameHeight = 6;
+#declare BedDistanceFromGround = 52;
+#declare FramePostHeight = 85;
+#declare FramePostWidth = 6;
+#declare PostCylinderHeight = 3;
+#declare PostCylinderRadius = 2;
+#declare FrameBarLength = 2;
+#declare FrameBarHeight = 8;
+#declare FrameBarGapSpace = 24;
+#declare PillowWidth = 70;
+#declare PillowHeight = 10;
+#declare PillowLength = 40;
                                                                                        
                                                                                        
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -427,21 +444,21 @@ background {
 #declare SmallMirror = box {
     <0,0,0>
     <SmallMirrorWidth,SmallMirrorHeight,2>
-    translate<DoorWidth+7,smallMirrorDistanceFromGround,RoomLength-1>
+    translate<DoorWidth+7,SmallMirrorDistanceFromGround,RoomLength-1>
     //texture{pigment{color White}}
 }
 #declare TallMirror = box {
     <0,0,0>
     <TallMirrorWidth,TallMirrorHeight+10,1>
     rotate<0,90,0>
-    translate<RoomWidth-1,tallMirrorDistanceFromGround-15,RoomLength>
+    translate<RoomWidth-1,TallMirrorDistanceFromGround-15,RoomLength>
     //texture{pigment{color White}}
 }
 #declare Map = box {
     <0,0,0>
     <MapWidth,MapHeight,0.25>
     rotate<0,90,0>
-    translate<0.5, postersDistanceFromGround-10, 150>
+    translate<0.5, PostersDistanceFromGround-10, 150>
     texture{pigment{color Yellow}}
 }
 #declare Poster = box {
@@ -454,8 +471,147 @@ background {
     <0,0,0>
     <FlagWidth,FlagHeight,0.5>
     rotate<0,90,0>
-    translate<RoomWidth-0.75, postersDistanceFromGround-30, 200>
+    translate<RoomWidth-0.75, PostersDistanceFromGround-30, 200>
     texture{pigment{color Red}}
+}
+
+//---------------------------The bed: the hardest part of the room besides the tree
+//the metal frame
+#declare MetalFrameBox = box {
+    <0,0,0>
+    <BedWidth+5,MetalFrameHeight,BedLength>
+    texture{pigment{color Black}}
+}
+#declare MetalFrameCutout = box {
+    <0,0,0>
+    <BedWidth-12,MetalFrameHeight+10,BedLength-15>
+    translate<3.5,-5,5>
+    texture{pigment{rgbt<1,1,1,1>}}
+}
+#declare MetalFrameCylinder = cylinder {
+    <0,0,0>
+    <BedWidth-10,0,0>
+    1
+}
+#declare MetalFrameCylinders = union {
+    #declare i = 20;
+    #while (i<BedLength-20)
+        object {
+            MetalFrameCylinder
+            translate<0,0,i>
+        }
+        #declare i = i + 20;
+    #end
+    translate<0,7,5>
+    texture{pigment{color Black}}    
+}
+#declare MetalFrameFrame = difference {
+    object {
+        MetalFrameBox
+    }
+    object {
+        MetalFrameCutout
+    }
+}
+#declare MetalFrame = union {
+    object {
+        MetalFrameFrame
+    }
+    object {
+        MetalFrameCylinders
+    } 
+    translate<RoomWidth-BedWidth-12,BedDistanceFromGround,littleWindowLedgeLength+11>
+}
+//the WoodenFrame
+#declare FramePostBar = box {
+    <0,0,0>
+    <FramePostWidth,FramePostHeight,FramePostWidth>
+}
+#declare FramePostCylinder = cylinder {
+    <0,0,0>
+    <0,PostCylinderHeight,0>
+    PostCylinderRadius
+}
+#declare FramePost = union {
+    object {
+        FramePostBar
+    }
+    object {
+        FramePostCylinder
+        translate<3,FramePostHeight,3>
+    }
+}
+#declare FrameBar = box {
+    <0,0,0>
+    <BedWidth,FrameBarHeight,FrameBarLength>
+}
+#declare Frame = union {
+    object {
+        FramePost
+        //translate<RoomWidth-BedWidth-15,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
+        translate<BedWidth,0,BedLength>
+    }
+    object {
+        FramePost
+        //translate<RoomWidth-BedWidth-15,0,littleWindowLedgeLength+5>
+        translate<BedWidth,0,0>
+    }
+    object {
+        FramePost
+        //translate<RoomWidth-9,0,littleWindowLedgeLength+5>
+        translate<0,0,BedLength>
+    }
+    object {
+        FramePost
+        //translate<RoomWidth-10,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
+        translate<0,0,0>
+    }
+    object {
+        FrameBar
+        translate<0,FrameBarGapSpace,0>
+    }
+    object {
+        FrameBar
+        translate<0,2*FrameBarGapSpace,0>
+    }
+    object {
+        FrameBar
+        translate<0,3*FrameBarGapSpace,0>
+    }
+    object {
+        FrameBar
+        translate<0,FrameBarGapSpace,BedLength>
+    }
+    object {
+        FrameBar
+        translate<0,2*FrameBarGapSpace,BedLength>
+    }
+    object {
+        FrameBar
+        translate<0,3*FrameBarGapSpace,BedLength>
+    }
+    texture{pigment{color Brown}}
+    
+}
+//the mattress
+#declare Mattress = box {
+    <0,0,0>
+    <BedWidth,MattressHeight,BedLength>
+    translate<RoomWidth-BedWidth-9,BedDistanceFromGround+MetalFrameHeight+1,littleWindowLedgeLength+10>
+    texture{pigment{rgb<0.4,0.3,0.4>}}
+}
+
+#declare Bed = union {
+    object {
+        MetalFrame
+    }
+    object {
+        Frame
+        translate<RoomWidth-BedWidth-12,0,littleWindowLedgeLength+5>
+    }
+    object {
+        Mattress
+    }
 }
 
 
@@ -475,8 +631,10 @@ camera {
     //look_at DoorwayView
     location DoorwayView
     look_at WindowView 
-    //location<100,20,100>
-    //look_at<10,10,10>
+    //location<100,200,150>
+    //look_at<RoomWidth,100,10>
+    //location<RoomWidth-BedWidth,220,BedLength>
+    //look_at<RoomWidth-BedWidth,100,BedLength>
 }
 
 //light source
@@ -494,34 +652,37 @@ light_source {
 
 /////////////////////////////////////////////////////////////////////////////
 //define the room with everything in it
+#declare TheRoomShell = difference {
+    object {
+        dormRoom
+        scale 1.01
+    }
+    object {
+        dormRoom
+    }
+    object {
+        DoorwayCutout
+    }
+    object {
+        WindowCutout
+    }
+    object {
+        ClosetCutoutWall
+        translate<RoomWidth-ClosetWidth,0,RoomLength>
+        translate<5,0.5,-5>
+        texture{pigment{rgb<0.5,0.5,0.5>}}
+    }
+    texture {
+        pigment {
+            rgb<0.5,0.5,0.5>
+        }
+    }
+}
 
  
 #declare myRoom = union { 
-    difference {
-        object {
-            dormRoom
-            scale 1.01
-        }
-        object {
-            dormRoom
-        }
-        object {
-            DoorwayCutout
-        }
-        object {
-            WindowCutout
-        }
-        object {
-            ClosetCutoutWall
-            translate<RoomWidth-ClosetWidth,0,RoomLength>
-            translate<5,0.5,-5>
-            texture{pigment{rgb<0.5,0.5,0.5>}}
-        }
-        texture {
-            pigment {
-                rgb<0.5,0.5,0.5>
-            }
-        }
+    object {
+        TheRoomShell
     }
     object {
         Closet
@@ -563,14 +724,17 @@ light_source {
     }
     object {
         Poster
-        translate<0.5, postersDistanceFromGround,300>
+        translate<0.5, PostersDistanceFromGround,300>
     }
     object {
         Poster
-        translate<RoomWidth - 0.5, postersDistanceFromGround-20,300>
+        translate<RoomWidth - 0.5, PostersDistanceFromGround-20,300>
     }
     object {
         Flag
+    }
+    object {
+        Bed
     }
 }
 

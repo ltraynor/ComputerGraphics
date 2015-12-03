@@ -55,13 +55,50 @@ background {
 #declare DeskGapHeight = 65;
 #declare DeskGapWidth = 65;
 #declare DeskGapDrawerHeight = 8;
-#declare DeskDrawerHeight = 17;
-#declare DeskDrawerWidth = 36;
+#declare DeskDrawerHeight = 20;
+#declare DeskDrawerWidth = 34;
 #declare SpaceBetweenDeskDrawers = 2;
 
 //Curtain Variables
 #declare curtainTubeLength = (RoomWidth/2) - 10;
-#declare curtainTubeRadius = 2;
+#declare curtainTubeRadius = 3;
+
+//Chair Variables
+#declare ChairLegHeight = 42;
+#declare ChairLegWidth = 2;
+#declare ChairBackHeight = 40;
+#declare ChairBackLength = 2;
+#declare ChairWidth = 50;
+#declare ChairBaseHeight = 4;
+#declare ChairBaseLength = 50;
+#declare ChairLegConnectorHeight = 4;
+#declare ChairLegConnectorWidth = 2;
+#declare ChairConnectorConnectorHeight = 2;
+#declare ChairConnectorConnectorWidth = ChairWidth-(2*ChairLegConnectorWidth);
+
+//Bookshelf Variables
+#declare BookShelfHeight = 75;
+#declare BookShelfWidth = 75;
+#declare BookShelfLength = 25;
+#declare BookShelfGapHeight = 30;
+#declare DividerHeight = 4;
+#declare GapSpaceFromTop = 7;
+#declare GapDepth = 23;
+
+//Mirror, Posters, Map, and Flag Variables
+#declare SmallMirrorHeight = 50;
+#declare SmallMirrorWidth = 36;
+#declare TallMirrorHeight = 100;
+#declare TallMirrorWidth = 36;
+#declare MapHeight = 60;
+#declare MapWidth = 90;
+#declare PosterHeight = 50;
+#declare PosterWidth = 35;
+#declare FlagHeight = 90;
+#declare FlagWidth = 150;
+#declare smallMirrorDistanceFromGround = 135;
+#declare tallMirrorDistanceFromGround = 80;
+#declare postersDistanceFromGround = 140;
                                                                                        
                                                                                        
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -112,11 +149,6 @@ background {
     }
     object {
         ClosetCutoutWall
-        texture {
-            pigment {
-                rgb<1,1,1>
-            }
-        }
         translate<5,0.5,-5>
     }
     translate<RoomWidth-ClosetWidth,0,RoomLength>       
@@ -196,7 +228,7 @@ background {
         texture { pigment{ rgbt<1,1,1,1>}}
         translate<DeskGapWidth/6,DeskGapDrawerHeight/2,0>
     }
-    translate<DeskDrawerWidth,DeskGapHeight,1>     
+    translate<DeskDrawerWidth+0.75,DeskGapHeight,1>     
 }
 #declare deskDrawer = box {
     <0,0,0>
@@ -207,8 +239,20 @@ background {
     #declare i = 0;
     #while (i<3) 
         object {
-            deskDrawer
-            translate<0,SpaceBetweenDeskDrawers*i + DeskDrawerHeight*i + 2,1>
+            #if (i=0)
+                deskDrawer
+                scale<1,1.5,>
+                translate<0,0,1>
+            #else
+                deskDrawer
+                //this seems really convoluted (and it is) but it was the only way I could get 
+                //  the spacing between the drawers to look right
+                #if (i=1)
+                    translate<0,SpaceBetweenDeskDrawers*i + DeskDrawerHeight*i + 9.5,1>
+                #else
+                    translate<0,SpaceBetweenDeskDrawers*i + DeskDrawerHeight*i + 9,1>
+                #end
+            #end
         }
         #declare i = i + 1;
     #end    
@@ -227,7 +271,7 @@ background {
     translate<20,0,littleWindowLedgeLength+2>
 }
 
-//-------------------Let's make the rolled up curtains! 
+//-----------------------------------Let's make the rolled up curtains! 
 #declare curtainTube = cylinder {
     <0,0,0>
     <0,curtainTubeLength,0>
@@ -239,14 +283,179 @@ background {
 #declare Curtains = union {
     object {
         curtainTube
+        scale<1,1.35,1>
     }
     object {
         curtainTube
-        translate<0,curtainTubeLength+15,0>
+        scale<1,0.67,1>
+        translate<0,curtainTubeLength+57,0>
     }
     texture{pigment{color Orange}}
     rotate<0,0,90>
     translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
+}
+//with little bar between windows!
+#declare windowDivider = box {
+    <0,0,0>
+    <6,WindowHeight,2>
+    translate<RoomWidth/3,WindowDistanceFromGround,1>
+    texture{pigment{rgb <0.5,0.5,0.5>}}
+}
+
+//--------------------------------------------Let's make the chair!!!!
+#declare ChairBase = box {
+    <0,0,0>
+    <ChairWidth,ChairBaseHeight,ChairBaseLength>
+    texture{pigment{color Brown}}    
+}
+#declare ChairLeg = box {
+    <0,0,0>
+    <ChairLegWidth,ChairLegHeight,ChairLegWidth>
+    texture{pigment{color Brown}}
+}
+#declare ChairBack = difference {
+    box {
+        <0,0,0>
+        <ChairWidth,ChairBackHeight,ChairBackLength>
+        texture{pigment{color Brown}}
+    }
+    cylinder {
+        <0,0,0>
+        <ChairWidth/2,0,0>
+        4   //radius
+        //rotate<0,0,90>
+        scale 3/2
+        translate<6,1.5,0>
+        texture{pigment{rgbt<1,1,1,1>}}
+    }
+    translate<0,ChairLegHeight+ChairBaseHeight,ChairBaseLength-1.25>
+}
+#declare ChairLegConnector = box {
+    <0,0,0>
+    <ChairLegConnectorWidth,ChairLegConnectorHeight,ChairBaseLength - 2*ChairLegWidth>
+    //translate<1,0,2> 
+    texture{pigment{color Brown}}
+}
+#declare ChairConnectorConnector = box {
+    <0,0,0>
+    <ChairWidth-2*ChairLegConnectorWidth,ChairConnectorConnectorHeight,4>
+    translate<0,1,ChairBaseLength/2>
+    texture{pigment{color Brown}}
+}
+#declare Chair = union {
+    object {
+        ChairBase
+        translate<0,ChairLegHeight,0>
+    }
+    object {
+        ChairLeg
+        translate<ChairWidth-ChairLegWidth,0,0>
+    }
+    object {
+        ChairLeg
+        translate<ChairWidth-ChairLegWidth,0,ChairBaseLength>
+    }
+    object {
+        ChairLeg
+        translate<1,0,0>
+    }
+    object {
+        ChairLeg
+        translate<1,0,ChairBaseLength>
+    }
+    object {
+        ChairBack
+    }
+    object {
+        ChairLegConnector
+        translate<1,0,2>
+    }
+    object {
+        ChairLegConnector
+        translate<ChairWidth-2,0,2>
+    }
+    object {
+        ChairConnectorConnector
+    }
+   //texture{pigment{color Brown}}
+    translate<27.5+DeskDrawerWidth,0,littleWindowLedgeLength+DeskLength-20>
+}
+
+//-------------------------------------------Lets make the bookshelf!
+#declare BookShelfBox = box {
+    <0,0,0>
+    <BookShelfWidth,BookShelfHeight,BookShelfLength>
+    texture{pigment{color Brown}}
+}
+#declare GapBox = box {
+    <0,0,0>
+    <BookShelfWidth-2, BookShelfGapHeight, GapDepth>
+    texture{pigment{rgbt<1,1,1,1>}}
+}
+#declare BookShelfDivider = box {
+    <0,0,0>
+    <BookShelfWidth,DividerHeight,BookShelfLength>
+    translate<0,BookShelfGapHeight,0>
+    texture{pigment{color Brown}}
+}
+#declare BookShelfOpen = difference {
+    object {
+        BookShelfBox
+    }
+    object {
+        GapBox
+        translate<1,2,4>
+    }
+    object {
+        GapBox
+        translate<1,BookShelfGapHeight+5,4>
+    }
+    //translate<150,1,100>
+}
+#declare BookShelf = union {
+    object {
+        BookShelfOpen
+    }
+    object {
+        BookShelfDivider
+    }
+    rotate<0,90,0>
+    translate<BookShelfLength,0.25,250>
+}
+
+//------------------------------Time for the mirrors, map, posters, and flag
+#declare SmallMirror = box {
+    <0,0,0>
+    <SmallMirrorWidth,SmallMirrorHeight,2>
+    translate<DoorWidth+7,smallMirrorDistanceFromGround,RoomLength-1>
+    //texture{pigment{color White}}
+}
+#declare TallMirror = box {
+    <0,0,0>
+    <TallMirrorWidth,TallMirrorHeight+10,1>
+    rotate<0,90,0>
+    translate<RoomWidth-1,tallMirrorDistanceFromGround-15,RoomLength>
+    //texture{pigment{color White}}
+}
+#declare Map = box {
+    <0,0,0>
+    <MapWidth,MapHeight,0.25>
+    rotate<0,90,0>
+    translate<0.5, postersDistanceFromGround-10, 150>
+    texture{pigment{color Yellow}}
+}
+#declare Poster = box {
+    <0,0,0>
+    <PosterWidth,PosterHeight,0.25>
+    rotate<0,90,0>
+    texture{pigment{color Yellow}}
+}
+#declare Flag = box {
+    <0,0,0>
+    <FlagWidth,FlagHeight,0.5>
+    rotate<0,90,0>
+    translate<RoomWidth-0.75, postersDistanceFromGround-30, 200>
+    texture{pigment{color Red}}
 }
 
 
@@ -280,7 +489,7 @@ light_source {
     <HalfRoomWidth,100,HalfRoomLength>
     rgb<1,1,1>
 }
- 
+
  
 
 /////////////////////////////////////////////////////////////////////////////
@@ -306,18 +515,21 @@ light_source {
             ClosetCutoutWall
             translate<RoomWidth-ClosetWidth,0,RoomLength>
             translate<5,0.5,-5>
+            texture{pigment{rgb<0.5,0.5,0.5>}}
         }
         texture {
             pigment {
-                rgb<0.55,0.55,0.55>
+                rgb<0.5,0.5,0.5>
             }
         }
     }
     object {
         Closet
+        texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         OpenDoor
+        texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         littleWindowLedge
@@ -330,6 +542,35 @@ light_source {
     }
     object {
         Curtains
+    }
+    object {
+        windowDivider
+    }
+    object {
+        Chair
+    }
+    object {
+        BookShelf
+    }
+    object {
+        SmallMirror
+    }
+    object {
+        TallMirror
+    }
+    object {
+        Map
+    }
+    object {
+        Poster
+        translate<0.5, postersDistanceFromGround,300>
+    }
+    object {
+        Poster
+        translate<RoomWidth - 0.5, postersDistanceFromGround-20,300>
+    }
+    object {
+        Flag
     }
 }
 
