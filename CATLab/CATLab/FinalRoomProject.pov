@@ -549,7 +549,7 @@ background {
     object {
         FramePost
         //translate<RoomWidth-BedWidth-15,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
-        translate<BedWidth,0,BedLength>
+        translate<BedWidth,0,BedLength+10>
     }
     object {
         FramePost
@@ -559,7 +559,7 @@ background {
     object {
         FramePost
         //translate<RoomWidth-9,0,littleWindowLedgeLength+5>
-        translate<0,0,BedLength>
+        translate<0,0,BedLength+10>
     }
     object {
         FramePost
@@ -580,15 +580,15 @@ background {
     }
     object {
         FrameBar
-        translate<0,FrameBarGapSpace,BedLength>
+        translate<0,FrameBarGapSpace,BedLength+10>
     }
     object {
         FrameBar
-        translate<0,2*FrameBarGapSpace,BedLength>
+        translate<0,2*FrameBarGapSpace,BedLength+10>
     }
     object {
         FrameBar
-        translate<0,3*FrameBarGapSpace,BedLength>
+        translate<0,3*FrameBarGapSpace,BedLength+10>
     }
     texture{pigment{color Brown}}
     
@@ -633,8 +633,8 @@ camera {
     look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
-    //location<RoomWidth-BedWidth,220,BedLength>
-    //look_at<RoomWidth-BedWidth,100,BedLength>
+    location<RoomWidth-BedWidth,220,BedLength>
+    look_at<RoomWidth-BedWidth,100,BedLength>
 }
 
 //light source
