@@ -1,14 +1,17 @@
 #include "colors.inc"
 
+/*
 background {
     rgb<0,1,1>
 }
+*/
 
-
+/*
 camera {
     location <-1300, 1300, 1000>
     look_at <-300,300,0>
 }
+*/
 
 
 /*
@@ -18,10 +21,12 @@ camera {
 }
 */
 
+/*
 light_source {
     <0,10000,0>
     rgb<1,1,1>
 }
+*/
 
 /*
 light_source {
@@ -253,6 +258,7 @@ light_source {
 }
 
 
+/*
 object {
     rooots
     //Roots7
@@ -260,3 +266,4 @@ object {
     transform{rootWarpTransform}
     //scale<1,1.2,1>
 }
+*/

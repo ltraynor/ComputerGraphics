@@ -257,6 +257,37 @@ light_source {
     }
 }
 
+#declare RoootsFinal = union {
+    object {
+        rooots
+        scale 0.1
+        rotate<95,0,0>
+        translate<0,-5,-15>
+    }
+    object {
+        rooots
+        scale 0.1
+        rotate<95,0,0>
+        translate<15,-15,-10>
+        rotate<0,20,40>
+    }
+    object {
+        rooots
+        scale 0.1
+        rotate<95,40,0>
+        translate<15,-15,-10>
+        rotate<0,0,80>
+        translate<5,-20,0>
+    }
+    object {
+        rooots
+        scale 0.1
+        rotate<95,0,180>
+        rotate<0,-50,0>
+        translate<-10,-10,-25>
+    }    
+}
+
 
 /*
 object {
