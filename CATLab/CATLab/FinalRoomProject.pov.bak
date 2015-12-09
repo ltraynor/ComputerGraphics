@@ -1,4 +1,5 @@
 #include "colors.inc"
+#include "shapes.inc"
  
 background {
     rgb<0,1,1>
@@ -293,7 +294,7 @@ background {
     <0,0,0>
     <0,curtainTubeLength,0>
     curtainTubeRadius
-    texture{pigment{color Orange}}
+    texture{pigment{color White}}
     //rotate<0,0,90>
     //translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
 }
@@ -320,20 +321,26 @@ background {
 }
 
 //--------------------------------------------Let's make the chair!!!!
-#declare ChairBase = box {
-    <0,0,0>
-    <ChairWidth,ChairBaseHeight,ChairBaseLength>
+#declare ChairBase = object { 
+    Round_Box_Union (
+        <ChairWidth,0,0>
+        <0,ChairBaseHeight,ChairBaseLength>
+        1
+    )
     texture{pigment{color Brown}}    
 }
 #declare ChairLeg = box {
     <0,0,0>
-    <ChairLegWidth,ChairLegHeight,ChairLegWidth>
+    <ChairLegWidth+1,ChairLegHeight,ChairLegWidth+1>
     texture{pigment{color Brown}}
 }
 #declare ChairBack = difference {
-    box {
-        <0,0,0>
-        <ChairWidth,ChairBackHeight,ChairBackLength>
+    object {
+        Round_Box_Union (
+            <ChairWidth,0,0>
+            <0,ChairBackHeight,ChairBackLength>
+            1
+        )
         texture{pigment{color Brown}}
     }
     cylinder {
@@ -366,11 +373,11 @@ background {
     }
     object {
         ChairLeg
-        translate<ChairWidth-ChairLegWidth,0,0>
+        translate<ChairWidth-ChairLegWidth-1,0,0>
     }
     object {
         ChairLeg
-        translate<ChairWidth-ChairLegWidth,0,ChairBaseLength>
+        translate<ChairWidth-ChairLegWidth-1,0,ChairBaseLength>
     }
     object {
         ChairLeg
@@ -427,7 +434,6 @@ background {
         GapBox
         translate<1,BookShelfGapHeight+5,4>
     }
-    //translate<150,1,100>
 }
 #declare BookShelf = union {
     object {
@@ -443,9 +449,19 @@ background {
 //------------------------------Time for the mirrors, map, posters, and flag
 #declare SmallMirror = box {
     <0,0,0>
-    <SmallMirrorWidth,SmallMirrorHeight,2>
-    translate<DoorWidth+7,SmallMirrorDistanceFromGround,RoomLength-1>
+    <SmallMirrorWidth,SmallMirrorHeight,1>
+    translate<DoorWidth+8,SmallMirrorDistanceFromGround,RoomLength-1>
     //texture{pigment{color White}}
+}
+#declare SmallMirrorFrame = union {
+    box {
+        <0,0,0>
+        <SmallMirrorWidth,2,2>
+    }
+    box {
+        <0,0,0>
+        <2,SmallMirrorHeight,2>
+    }
 }
 #declare TallMirror = box {
     <0,0,0>
@@ -549,7 +565,7 @@ background {
     object {
         FramePost
         //translate<RoomWidth-BedWidth-15,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
-        translate<BedWidth,0,BedLength+10>
+        translate<BedWidth,0,BedLength+13>
     }
     object {
         FramePost
@@ -559,7 +575,7 @@ background {
     object {
         FramePost
         //translate<RoomWidth-9,0,littleWindowLedgeLength+5>
-        translate<0,0,BedLength+10>
+        translate<0,0,BedLength+13>
     }
     object {
         FramePost
@@ -580,26 +596,62 @@ background {
     }
     object {
         FrameBar
-        translate<0,FrameBarGapSpace,BedLength+10>
+        translate<0,FrameBarGapSpace,BedLength+13>
     }
     object {
         FrameBar
-        translate<0,2*FrameBarGapSpace,BedLength+10>
+        translate<0,2*FrameBarGapSpace,BedLength+13>
     }
     object {
         FrameBar
-        translate<0,3*FrameBarGapSpace,BedLength+10>
+        translate<0,3*FrameBarGapSpace,BedLength+13>
     }
     texture{pigment{color Brown}}
     
 }
 //the mattress
-#declare Mattress = box {
-    <0,0,0>
-    <BedWidth,MattressHeight,BedLength>
+#declare Mattress = object {
+    Round_Box_Union (
+        <BedWidth,0,0>
+        <0,MattressHeight,BedLength>
+        3
+    )
     translate<RoomWidth-BedWidth-9,BedDistanceFromGround+MetalFrameHeight+1,littleWindowLedgeLength+10>
     texture{pigment{rgb<0.4,0.3,0.4>}}
 }
+#declare Comforter = union {
+    object {
+        Round_Box_Union (
+            <BedWidth+7,0,0>
+            <0,3,BedLength+7>
+            3
+        )
+    }
+    object {
+        Round_Box_Union (
+            <BedWidth+7,0,0>
+            <0,10,3>
+            1
+        )
+        translate<0,-8,BedLength+5>
+    }
+    object {
+        Round_Box_Union (
+            <3,0,0>
+            <0,10, BedLength+7>
+            1
+        )
+        translate<0,-8,0>
+    }
+    texture{pigment{color Orange}}
+    translate<RoomWidth-BedWidth-11, BedDistanceFromGround+MetalFrameHeight+MattressHeight+3,littleWindowLedgeLength+10>
+}
+
+#declare Pillow = Round_Box_Union (
+    <PillowWidth,0,0>
+    <0,PillowHeight,PillowLength>
+    4
+)
 
 #declare Bed = union {
     object {
@@ -611,6 +663,20 @@ background {
     }
     object {
         Mattress
+    }
+    object {
+        Comforter
+    }
+    object {
+        Pillow
+        texture{pigment{color White}}
+        translate<RoomWidth-BedWidth+10,PostersDistanceFromGround-60,littleWindowLedgeLength+15>
+    }
+    object {
+        Pillow
+        texture{pigment{color Orange}}
+        rotate<30,0,0>
+        translate<RoomWidth-BedWidth+10,PostersDistanceFromGround-42,littleWindowLedgeLength+25>
     }
 }
 
@@ -627,14 +693,14 @@ background {
 
 //camera
 camera {
-    //location WindowView
-    //look_at DoorwayView
-    location DoorwayView
-    look_at WindowView 
+    location WindowView
+    look_at DoorwayView
+    //location DoorwayView
+    //look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
-    location<RoomWidth-BedWidth,220,BedLength>
-    look_at<RoomWidth-BedWidth,100,BedLength>
+    //location<RoomWidth-BedWidth,220,BedLength>
+    //look_at<RoomWidth-BedWidth,100,BedLength>
 }
 
 //light source
