@@ -1,7 +1,6 @@
 #include "colors.inc"
 #include "shapes.inc"
 #include "treeFile.inc"
-#include "rad_def.inc"
  
 background {
     rgb<0,1,1>
@@ -120,6 +119,63 @@ background {
 #declare PillowHeight = 10;
 #declare PillowLength = 40;
                                                                                        
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+//the textures for the components of the room
+
+//texture for the Walls and Closet
+#declare WallTexture = texture {
+    uv_mapping pigment{image_map{jpeg "WallTexture.jpg"}}
+    scale 0.005
+}
+
+//texture for Desk, Chair, BookShelf, and WoodenBedFrame
+#declare WoodTexture = texture {
+    pigment {
+        #declare colorMap = color_map {
+            [0 rgb<0.6,0.4,0.1>]
+            [1.0 rgb<1,0.8,0.6>]
+        }
+        wood
+        turbulence 0.1
+    }
+    scale 4
+}
+#declare WoodTexture2 = texture {
+    pigment {
+        #declare colorMap2 = color_map {
+            [0 rgb<1,1,1>]
+            [1.0 rgb<1,0.8,0.6>]
+        }
+        wood
+        turbulence 0.1
+    }
+    scale 4
+}
+
+//texture for blanket and one pillow
+#declare BlanketTexture = texture {
+    pigment {
+        #declare blanketMap = color_map {
+            //[0 rgb<0.25,0.25,0.25>]
+            [0 color White]
+            //[0.4 rgb<0.25,0.25,0.25>]
+            //[0.41 rgb<0.8,0.4,0>]
+            //[0.6 rgb<0.8,0.4,0>]
+            [0.6 color White]
+            [0.61 rgb<0.25,0.25,0.25>]
+            [0.7 rgb<0.25,0.25,0.25>]
+            [0.71 rgb<1,1,1>]
+            [0.8 rgb<1,1,1>]
+            [0.81 rgb<0.25,0.25,0.25>]
+            //[1.0 rgb<0.25,0.25,0.25>]
+            [1.0 color White]
+            
+        }
+        scale 1
+    }
+}
                                                                                        
 ///////////////////////////////////////////////////////////////////////////////////////
 //define individual components of room 
@@ -138,11 +194,11 @@ background {
 #declare OpenDoor = object {
     DoorwayCutout
     translate<-(RoomWidth-DoorDistanceFromRightWall-73),-0.5,-RoomLength>
-    rotate<0,5,0>
+    rotate<0,2,0>
     translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
     texture {
-        pigment {
-            rgb<1,1,1>
+        pigment { 
+            rgb<0.75,0.75,0.75>
         }
     }
 };
@@ -161,16 +217,14 @@ background {
 #declare Closet = difference {
     object {
         ClosetBox
-        texture {
-            pigment {
-                rgb<1,1,1>
-            }
-        }
     }
     object {
         ClosetCutoutWall
         translate<5,0.5,-5>
     }
+    texture {
+            WallTexture
+        }
     translate<RoomWidth-ClosetWidth,0,RoomLength>       
 } 
 
@@ -188,9 +242,7 @@ background {
     <0,0,0>
     <RoomWidth,littleWindowLedgeHeight,littleWindowLedgeLength>
     texture {
-        pigment {
-            rgb<0.7,0.7,0.7>
-        }
+        WallTexture
     }
     translate<0,WindowDistanceFromGround,0>
 } 
@@ -211,12 +263,7 @@ background {
 #declare deskBox = box {
         <0,0,0>
         <DeskWidth,DeskHeight,DeskLength>
-        texture {
-            pigment {  
-                rgb <0,1,0>
-            }
-            
-        }        
+        texture{WoodTexture2}
 }
 #declare deskGap = box {
     <0,0,0>
@@ -240,7 +287,7 @@ background {
     box {
         <0,0,0>
         <DeskGapWidth-1,DeskGapDrawerHeight,DeskLength>
-        texture { pigment {color Red}}
+        texture{WoodTexture2}
     }
     box {
         <0,0,0>
@@ -253,7 +300,7 @@ background {
 #declare deskDrawer = box {
     <0,0,0>
     <DeskDrawerWidth-1,DeskDrawerHeight,DeskLength>
-    texture {pigment {color Red}}
+    texture{WoodTexture2}
 }
 #declare deskDrawers = union {
     #declare i = 0;
@@ -275,7 +322,8 @@ background {
             #end
         }
         #declare i = i + 1;
-    #end    
+    #end
+    texture{WoodTexture2}    
 }
 
 #declare Desk = union {
@@ -289,6 +337,7 @@ background {
         deskDrawers
     }
     translate<20,0,littleWindowLedgeLength+2>
+    texture{WoodTexture2}
 }
 
 //-----------------------------------Let's make the rolled up curtains! 
@@ -319,7 +368,7 @@ background {
     <0,0,0>
     <6,WindowHeight,2>
     translate<RoomWidth/3,WindowDistanceFromGround,1>
-    texture{pigment{rgb <0.5,0.5,0.5>}}
+    texture{WallTexture}
 }
 
 //--------------------------------------------Let's make the chair!!!!
@@ -329,12 +378,12 @@ background {
         <0,ChairBaseHeight,ChairBaseLength>
         1
     )
-    texture{pigment{color Brown}}    
+    texture{WoodTexture2}    
 }
 #declare ChairLeg = box {
     <0,0,0>
     <ChairLegWidth+1,ChairLegHeight,ChairLegWidth+1>
-    texture{pigment{color Brown}}
+    texture{WoodTexture2}
 }
 #declare ChairBack = difference {
     object {
@@ -343,7 +392,7 @@ background {
             <0,ChairBackHeight,ChairBackLength>
             1
         )
-        texture{pigment{color Brown}}
+        texture{WoodTexture2}
     }
     cylinder {
         <0,0,0>
@@ -360,13 +409,13 @@ background {
     <0,0,0>
     <ChairLegConnectorWidth,ChairLegConnectorHeight,ChairBaseLength - 2*ChairLegWidth>
     //translate<1,0,2> 
-    texture{pigment{color Brown}}
+    texture{WoodTexture2}
 }
 #declare ChairConnectorConnector = box {
     <0,0,0>
     <ChairWidth-2*ChairLegConnectorWidth,ChairConnectorConnectorHeight,4>
     translate<0,1,ChairBaseLength/2>
-    texture{pigment{color Brown}}
+    texture{WoodTexture2}
 }
 #declare Chair = union {
     object {
@@ -403,7 +452,7 @@ background {
     object {
         ChairConnectorConnector
     }
-   //texture{pigment{color Brown}}
+   //texture{WoodTexture}
     translate<27.5+DeskDrawerWidth,0,littleWindowLedgeLength+DeskLength-20>
 }
 
@@ -411,7 +460,7 @@ background {
 #declare BookShelfBox = box {
     <0,0,0>
     <BookShelfWidth,BookShelfHeight,BookShelfLength>
-    texture{pigment{color Brown}}
+    texture{WoodTexture}
 }
 #declare GapBox = box {
     <0,0,0>
@@ -422,7 +471,7 @@ background {
     <0,0,0>
     <BookShelfWidth,DividerHeight,BookShelfLength>
     translate<0,BookShelfGapHeight,0>
-    texture{pigment{color Brown}}
+    texture{WoodTexture}
 }
 #declare BookShelfOpen = difference {
     object {
@@ -630,7 +679,7 @@ background {
         FrameBar
         translate<0,3*FrameBarGapSpace,BedLength+13>
     }
-    texture{pigment{color Brown}}
+    texture{WoodTexture}
     
 }
 //the mattress
@@ -667,7 +716,7 @@ background {
         )
         translate<0,-8,0>
     }
-    texture{pigment{color Orange}}
+    texture{BlanketTexture}
     translate<RoomWidth-BedWidth-11, BedDistanceFromGround+MetalFrameHeight+MattressHeight+3,littleWindowLedgeLength+10>
 }
 
@@ -715,18 +764,12 @@ background {
 //Look at the door, camera must be by the window                                                               
 #declare DoorwayView = <HalfRoomWidth, SeatedEyeHeight, RoomLength>;
 
-global_settings {
-    radiosity {
-        Rad_Settings(Radiosity_Default,off,off)
-    }
-}
-
 //camera
 camera {
     location WindowView
     look_at DoorwayView
-    //location DoorwayView
-    //look_at WindowView 
+    location DoorwayView
+    look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
     //location<RoomWidth-BedWidth,220,BedLength>
@@ -770,9 +813,7 @@ light_source {
         texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     texture {
-        pigment {
-            rgb<0.5,0.5,0.5>
-        }
+        WallTexture
     }
 }
 
@@ -783,11 +824,11 @@ light_source {
     }
     object {
         Closet
-        texture{pigment{rgb<0.5,0.5,0.5>}}
+        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         OpenDoor
-        texture{pigment{rgb<0.5,0.5,0.5>}}
+        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         littleWindowLedge
@@ -830,13 +871,14 @@ light_source {
     object {
         Flag
     }
-    //object {
-   //     Bed
-   // }
+    object {
+        Bed
+    }
 }
 
 //-----------------------------------------------------------------------//
 
+/*
 merge {
     object {
         myRoom
@@ -849,5 +891,9 @@ merge {
         
     }
 }
+*/
 
+object {
+    myRoom
+}
 

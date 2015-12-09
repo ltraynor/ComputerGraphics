@@ -1,6 +1,6 @@
 #include "colors.inc"
 
-/*
+
 background {
     rgb<0,0,0>
 }
@@ -10,7 +10,7 @@ camera {
     location<0,10,300>
     look_at<0,10,0>
 }
-*/
+
 
 
 #declare glowingSpore = sphere {

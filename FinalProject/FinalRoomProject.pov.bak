@@ -1,5 +1,7 @@
 #include "colors.inc"
 #include "shapes.inc"
+#include "treeFile.inc"
+//#include "rad_def.inc"
  
 background {
     rgb<0,1,1>
@@ -136,7 +138,7 @@ background {
 #declare OpenDoor = object {
     DoorwayCutout
     translate<-(RoomWidth-DoorDistanceFromRightWall-73),-0.5,-RoomLength>
-    rotate<0,60,0>
+    rotate<0,2,0>
     translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
     texture {
         pigment {
@@ -414,13 +416,13 @@ background {
 #declare GapBox = box {
     <0,0,0>
     <BookShelfWidth-2, BookShelfGapHeight, GapDepth>
-    texture{pigment{rgbt<1,1,1,1>}}
+    //texture{pigment{rgbt<1,1,1,1>}}
 }
 #declare BookShelfDivider = box {
     <0,0,0>
     <BookShelfWidth,DividerHeight,BookShelfLength>
     translate<0,BookShelfGapHeight,0>
-    texture{pigment{color Brown}}
+    //texture{pigment{color Brown}}
 }
 #declare BookShelfOpen = difference {
     object {
@@ -444,6 +446,7 @@ background {
     }
     rotate<0,90,0>
     translate<BookShelfLength,0.25,250>
+    texture{pigment{color Brown}}
 }
 
 //------------------------------Time for the mirrors, map, posters, and flag
@@ -713,6 +716,14 @@ background {
 //Look at the door, camera must be by the window                                                               
 #declare DoorwayView = <HalfRoomWidth, SeatedEyeHeight, RoomLength>;
 
+/*
+global_settings {
+    radiosity {
+        Rad_Settings(Radiosity_Default,off,off)
+    }
+}
+*/
+
 //camera
 camera {
     location WindowView
@@ -724,6 +735,7 @@ camera {
     //location<RoomWidth-BedWidth,220,BedLength>
     //look_at<RoomWidth-BedWidth,100,BedLength>
 }
+
 
 //light source
 light_source {
@@ -828,8 +840,22 @@ light_source {
 
 //-----------------------------------------------------------------------//
 
+/*
+merge {
+    object {
+        myRoom
+    }
+    object {
+        theTree
+        scale 2
+        rotate<0,180,0>
+        translate<RoomWidth-70,20,RoomLength+50>
+        
+    }
+}
+*/
+
 object {
     myRoom
 }
-
 
