@@ -1,5 +1,6 @@
 #include "colors.inc"
-#include "rootFileForTree.inc" 
+#include "rootFileForTree.inc"
+#include "glowingSpheresFile.inc" 
 
 background {
     rgb<0,1,1>
@@ -22,12 +23,12 @@ camera {
 }
 
 
-/*
+
 light_source {
     <0,100,200>
     rgb<1,1,1>
 }
-*/
+
  
 
 #declare treeMeshStart = mesh2 { 
@@ -295,22 +296,6 @@ light_source {
 }
 
 
-#declare glowingSpore = sphere {
-    <0,0,0>
-    2
-    texture {
-        pigment {
-            color Yellow
-        }
-        finish {
-            specular 1
-            roughness 0.5
-            emission 1000
-        }
-    }
-}
-
-
 #declare theTree = union {
     object {
         treeTrunk
@@ -321,14 +306,14 @@ light_source {
     object {
         Branches
         translate<5,70,-19>
+    }
+    object {
+        Spores
     }    
 }
+
 
 object {
     theTree
 }
 
-object {
-    glowingSpore
-    translate<-20, 40, -80>
-}

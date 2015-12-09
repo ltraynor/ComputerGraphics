@@ -1,5 +1,7 @@
 #include "colors.inc"
 #include "shapes.inc"
+#include "treeFile.inc"
+#include "rad_def.inc"
  
 background {
     rgb<0,1,1>
@@ -136,7 +138,7 @@ background {
 #declare OpenDoor = object {
     DoorwayCutout
     translate<-(RoomWidth-DoorDistanceFromRightWall-73),-0.5,-RoomLength>
-    rotate<0,60,0>
+    rotate<0,5,0>
     translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
     texture {
         pigment {
@@ -713,17 +715,24 @@ background {
 //Look at the door, camera must be by the window                                                               
 #declare DoorwayView = <HalfRoomWidth, SeatedEyeHeight, RoomLength>;
 
+global_settings {
+    radiosity {
+        Rad_Settings(Radiosity_Default,off,off)
+    }
+}
+
 //camera
 camera {
     location WindowView
     look_at DoorwayView
-    location DoorwayView
-    look_at WindowView 
+    //location DoorwayView
+    //look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
     //location<RoomWidth-BedWidth,220,BedLength>
     //look_at<RoomWidth-BedWidth,100,BedLength>
 }
+
 
 //light source
 light_source {
@@ -821,15 +830,24 @@ light_source {
     object {
         Flag
     }
-    object {
-        Bed
-    }
+    //object {
+   //     Bed
+   // }
 }
 
 //-----------------------------------------------------------------------//
 
-object {
-    myRoom
+merge {
+    object {
+        myRoom
+    }
+    object {
+        theTree
+        scale 2
+        rotate<0,180,0>
+        translate<RoomWidth-70,20,RoomLength+50>
+        
+    }
 }
 
 
