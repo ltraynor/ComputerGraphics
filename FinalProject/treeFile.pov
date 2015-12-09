@@ -9,17 +9,25 @@ background {
 camera {
     location<-50,50,200>
     look_at<0,30,0>
-    //location<1,60,-25>
-    //look_at<1,0,-25>
-    location<-100,50,0>
-    look_at<0,30,0>
+    //location<1,200,0>
+    //look_at<1,0,0>
+    //location<-100,50,0>
+    //look_at<0,30,0>
+    //location<0,300,0>
+    //look_at<0,0,0>
+    //location<-20,20,100>
+    //look_at<-20,20,30>
+    //location<0,20,0>
+    //look_at<0,0,0>
 }
 
 
+/*
 light_source {
     <0,100,200>
     rgb<1,1,1>
 }
+*/
  
 
 #declare treeMeshStart = mesh2 { 
@@ -48,6 +56,22 @@ light_source {
         <8,7,9>
     }
     
+}
+
+#declare leafMesh = mesh2 {
+    vertex_vectors {
+        4
+        <0,0,0>     //0
+        <1,2,2>     //1
+        <2,2.5,1.5> //2
+        <3,1,1>     //3
+    }
+    face_indices {
+        3
+        <0,1,2>
+        <0,2,3>
+        <2,1,3>
+    }    
 }
 
 #declare treeMeshUnit = union {
@@ -187,6 +211,15 @@ light_source {
         }
         #declare Index = Index + 1;
     #end
+    texture {
+        pigment {
+            color Brown
+        }
+        finish {
+            specular 0.3 
+            roughness 0.05
+        }
+    }
 }
 
 
@@ -203,17 +236,77 @@ light_source {
     }
 }
 
-
-#declare Branches = union {
+#declare Leaves = union {
     object {
-        branch 
-        rotate<60,0,0>
+        leafMesh
+        scale 3
+        rotate<90,0,0>
+        translate<-10,30,30>
+        texture{pigment{color Green}}
     }
+
+    object {
+        leafMesh
+        scale 3
+        rotate<90,0,0>
+        translate<-7,28,30>
+        texture{pigment{color Green}}
+    }
+
+    object {
+        leafMesh
+        scale 3
+        rotate<90,0,0>
+        translate<-14,28,30>
+        texture{pigment{color Green}}
+    }
+}
+
+#declare BranchWithLeaves = union {
     object {
         branch
         rotate<60,0,0>
-        translate<-10,0,0>
-        rotate<0,20,0>
+    }
+    object {
+        Leaves
+        translate<0,0,50>
+    }
+}
+
+#declare Branches = union {
+    #declare Index = 0;
+    #while (Index < 360)
+        object {
+            BranchWithLeaves
+            //rotate<60,0,0>
+            rotate<0,-Index,0>
+        }
+        #declare Index = Index + 40;
+    #end
+    texture {
+        pigment {
+            color Brown
+        }
+        finish {
+            specular 0.3 
+            roughness 0.05
+        }
+    }
+}
+
+
+#declare glowingSpore = sphere {
+    <0,0,0>
+    2
+    texture {
+        pigment {
+            color Yellow
+        }
+        finish {
+            specular 1
+            roughness 0.5
+            emission 1000
+        }
     }
 }
 
@@ -227,25 +320,15 @@ light_source {
     }
     object {
         Branches
-        translate<100,0,0>
+        translate<5,70,-19>
     }    
 }
 
-
 object {
     theTree
-    texture {
-        pigment {
-            color Brown
-        }
-        finish {
-            specular 0.3 
-            roughness 0.05
-        }
-    }
 }
 
-
-
-
-
+object {
+    glowingSpore
+    translate<-20, 40, -80>
+}

@@ -7,15 +7,17 @@ background {
 
 
 camera {
-    location<5,0,40>
-    look_at<5,0,0>
+    location<-50,50,200>
+    look_at<0,30,0>
     //location<1,60,-25>
     //look_at<1,0,-25>
+    location<-100,50,0>
+    look_at<0,30,0>
 }
 
 
 light_source {
-    <0,10000,0>
+    <0,100,200>
     rgb<1,1,1>
 }
  
@@ -176,19 +178,73 @@ light_source {
 
 #declare treeTrunk = union {
     #declare Index = 0;
-    #while (Index < 20)
+    #while (Index < 10)
         object {
             treeMeshPiece
-            rotate<0,2*Index,0>
-            translate<0,4*Index,0>
+            scale <0.75,2,0.75>
+            rotate<0,0*Index,0>
+            translate<0,8.1*Index,0>
         }
+        #declare Index = Index + 1;
     #end
 }
 
-object {
-    treeTrunk
-    texture{pigment{color Brown}finish{specular 0.5 roughness 0.05}}
+
+#declare branch = merge {
+    object {
+        treeTrunk
+        scale <0.25,0.7,0.25>
+    }
+    object {
+        treeTrunk
+        scale <0.15,0.5,0.15>
+        rotate<35,0,15>
+        translate<0,50,-3>
+    }
 }
+
+
+#declare Branches = union {
+    object {
+        branch 
+        rotate<60,0,0>
+    }
+    object {
+        branch
+        rotate<60,0,0>
+        translate<-10,0,0>
+        rotate<0,20,0>
+    }
+}
+
+
+#declare theTree = union {
+    object {
+        treeTrunk
+    }
+    object {
+        RoootsFinal
+    }
+    object {
+        Branches
+        translate<100,0,0>
+    }    
+}
+
+
+object {
+    theTree
+    texture {
+        pigment {
+            color Brown
+        }
+        finish {
+            specular 0.3 
+            roughness 0.05
+        }
+    }
+}
+
 
 
 
