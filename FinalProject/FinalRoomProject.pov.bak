@@ -1,7 +1,6 @@
 #include "colors.inc"
 #include "shapes.inc"
 #include "treeFile.inc"
-//#include "rad_def.inc"
  
 background {
     rgb<0,1,1>
@@ -120,6 +119,154 @@ background {
 #declare PillowHeight = 10;
 #declare PillowLength = 40;
                                                                                        
+
+
+///////////////////////////////////////////////////////////////////////////////////////
+//the textures for the components of the room
+
+//texture for the Walls and Closet
+#declare WallTexture = texture {
+    pigment {
+        rgb <0.5,0.5,0.5>
+    }
+    finish {
+        ambient 0.1
+        specular 0.05
+        roughness 0.25
+    }
+}
+
+
+//color maps for the wood textures
+#declare woodColorMap = color_map {
+    [0 rgb<0.6,0.4,0.1>]
+    [1.0 rgb<1,0.8,0.6>]
+}
+#declare darkWoodColorMap = color_map {
+    [0 rgb<0.3,0.2,0.05>]
+    [1.0 rgb<0.6,0.4,0.3>]
+}
+
+
+//texture for Desk, Chair, BookShelf, and WoodenBedFrame
+#declare WoodTexture = texture {
+    pigment {
+        wood
+        color_map {woodColorMap}
+        turbulence 0.1
+    }
+    scale 5
+}
+//got lazy and used image maps
+//accidentally ran this with both textures on at the same time and I kinda like the way it looks 
+#declare darkWoodTexture = texture {
+    uv_mapping pigment{image_map{png "darkWoodTexture.png"}}
+    scale 2
+    
+    pigment {
+        wood
+        color_map {darkWoodColorMap}
+        turbulence 0.2
+    }
+    scale 5
+}
+#declare redWoodTexture = texture {
+    uv_mapping pigment{image_map{jpeg "redWoodTexture.jpg"}}
+    scale 1
+}
+
+
+//color map used for blanket and pillow texture
+#declare blanketMap = color_map {
+    
+    [0 rgb<0.05,0.05,0.05>]
+    [0.4 rgb<0.05,0.05,0.05>]
+    [0.41 rgb<0.8,0.4,0>]
+    [0.6 rgb<0.8,0.4,0>]
+    [0.61 rgb<0.05,0.05,0.05>]
+    [0.7 rgb<0.05,0.05,0.05>]
+    [0.71 rgb<1,1,1>]
+    [0.8 rgb<1,1,1>]
+    [0.81 rgb<0.05,0.05,0.05>]
+    [1.0 rgb<0.05,0.05,0.05>]
+    
+}
+//texture for blanket and one pillow
+#declare BlanketTexture = texture {
+    pigment {
+        gradient 10
+        color_map {blanketMap}
+        rotate<0,-225,0>
+        scale 120
+        translate<0,0,-90>
+    }
+}
+
+//texture for the curtains
+#declare CurtainTexture = texture {
+    uv_mapping pigment{image_map{jpeg "curtainTexture"}}
+    scale 0.05
+}
+
+//color map for the radiator
+#declare radiatorColorMap = color_map {
+    [0 rgb<1,1,1>]
+    [0 rgb<1,1,0.5>]
+}
+//texture for the radiator
+#declare RadiatorTexture = texture {
+    pigment {
+        agate
+        color_map {radiatorColorMap}
+        turbulence 0.5
+    }
+    finish {
+        specular 0.15
+        roughness 1
+    }
+}
+
+//texture for the mattress. pretty much just a dull blue color...
+#declare MattressTexture = texture {
+    pigment {
+        rgb <0.1,0.3,0.3>
+    }
+}
+
+//texture for metal frame, just black and really shiny
+#declare MetalFrameTexture = texture {
+    pigment {
+        color Black
+    }
+    finish {
+        specular 0.3
+        roughness 0.05
+        ambient 0.1
+        metallic 0.5
+    }
+}
+
+//texture for the flag. its an image of a flag lol
+#declare FlagTexture = texture {
+    uv_mapping pigment{image_map{png "FlagTexture"}}
+    rotate<0,180,0>
+    scale 0.35
+    translate<0,-0.032,0>
+}
+
+//texture for the map, its an image of the map :)
+#declare MapTexture = texture {
+    uv_mapping pigment{image_map {
+            jpeg "MapTexture"
+        }
+        //translate<0,1299999999999990,0>
+    }
+    translate<1,1,999999999999999999999999999999999999999999999999999999999999999999999999>
+    rotate<0,180,0>
+    scale 0.3
+    //translate<
+}
+
                                                                                        
 ///////////////////////////////////////////////////////////////////////////////////////
 //define individual components of room 
@@ -141,8 +288,8 @@ background {
     rotate<0,2,0>
     translate<RoomWidth-DoorDistanceFromRightWall-73,0.5,RoomLength>
     texture {
-        pigment {
-            rgb<1,1,1>
+        pigment { 
+            rgb<0.75,0.75,0.75>
         }
     }
 };
@@ -161,16 +308,14 @@ background {
 #declare Closet = difference {
     object {
         ClosetBox
-        texture {
-            pigment {
-                rgb<1,1,1>
-            }
-        }
     }
     object {
         ClosetCutoutWall
         translate<5,0.5,-5>
     }
+    texture {
+            WallTexture
+        }
     translate<RoomWidth-ClosetWidth,0,RoomLength>       
 } 
 
@@ -188,9 +333,7 @@ background {
     <0,0,0>
     <RoomWidth,littleWindowLedgeHeight,littleWindowLedgeLength>
     texture {
-        pigment {
-            rgb<0.7,0.7,0.7>
-        }
+        WallTexture
     }
     translate<0,WindowDistanceFromGround,0>
 } 
@@ -200,9 +343,7 @@ background {
     <0,0,0>
     <RoomWidth,RadiatorHeight,littleWindowLedgeLength - 1>
     texture {
-        pigment {
-            rgb<1,1,1>
-        }
+        RadiatorTexture
     }
     translate<0,RadiatorDistanceFromGround,0>
 }
@@ -211,12 +352,7 @@ background {
 #declare deskBox = box {
         <0,0,0>
         <DeskWidth,DeskHeight,DeskLength>
-        texture {
-            pigment {  
-                rgb <0,1,0>
-            }
-            
-        }        
+        texture{WoodTexture}
 }
 #declare deskGap = box {
     <0,0,0>
@@ -240,7 +376,7 @@ background {
     box {
         <0,0,0>
         <DeskGapWidth-1,DeskGapDrawerHeight,DeskLength>
-        texture { pigment {color Red}}
+        texture{WoodTexture}
     }
     box {
         <0,0,0>
@@ -253,7 +389,7 @@ background {
 #declare deskDrawer = box {
     <0,0,0>
     <DeskDrawerWidth-1,DeskDrawerHeight,DeskLength>
-    texture {pigment {color Red}}
+    texture{WoodTexture rotate<0,20,0> translate<0,-20,0>}
 }
 #declare deskDrawers = union {
     #declare i = 0;
@@ -275,7 +411,8 @@ background {
             #end
         }
         #declare i = i + 1;
-    #end    
+    #end
+    texture{WoodTexture}    
 }
 
 #declare Desk = union {
@@ -289,6 +426,7 @@ background {
         deskDrawers
     }
     translate<20,0,littleWindowLedgeLength+2>
+    texture{WoodTexture}
 }
 
 //-----------------------------------Let's make the rolled up curtains! 
@@ -296,7 +434,7 @@ background {
     <0,0,0>
     <0,curtainTubeLength,0>
     curtainTubeRadius
-    texture{pigment{color White}}
+    texture{CurtainTexture}
     //rotate<0,0,90>
     //translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
 }
@@ -310,7 +448,7 @@ background {
         scale<1,0.67,1>
         translate<0,curtainTubeLength+57,0>
     }
-    texture{pigment{color Orange}}
+    //texture{pigment{color Orange}}
     rotate<0,0,90>
     translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
 }
@@ -319,7 +457,7 @@ background {
     <0,0,0>
     <6,WindowHeight,2>
     translate<RoomWidth/3,WindowDistanceFromGround,1>
-    texture{pigment{rgb <0.5,0.5,0.5>}}
+    texture{WallTexture}
 }
 
 //--------------------------------------------Let's make the chair!!!!
@@ -329,12 +467,12 @@ background {
         <0,ChairBaseHeight,ChairBaseLength>
         1
     )
-    texture{pigment{color Brown}}    
+    texture{redWoodTexture}    
 }
 #declare ChairLeg = box {
     <0,0,0>
     <ChairLegWidth+1,ChairLegHeight,ChairLegWidth+1>
-    texture{pigment{color Brown}}
+    texture{darkWoodTexture}
 }
 #declare ChairBack = difference {
     object {
@@ -343,7 +481,7 @@ background {
             <0,ChairBackHeight,ChairBackLength>
             1
         )
-        texture{pigment{color Brown}}
+        texture{redWoodTexture}
     }
     cylinder {
         <0,0,0>
@@ -360,13 +498,13 @@ background {
     <0,0,0>
     <ChairLegConnectorWidth,ChairLegConnectorHeight,ChairBaseLength - 2*ChairLegWidth>
     //translate<1,0,2> 
-    texture{pigment{color Brown}}
+    texture{darkWoodTexture}
 }
 #declare ChairConnectorConnector = box {
     <0,0,0>
     <ChairWidth-2*ChairLegConnectorWidth,ChairConnectorConnectorHeight,4>
     translate<0,1,ChairBaseLength/2>
-    texture{pigment{color Brown}}
+    texture{darkWoodTexture}
 }
 #declare Chair = union {
     object {
@@ -403,7 +541,7 @@ background {
     object {
         ChairConnectorConnector
     }
-   //texture{pigment{color Brown}}
+   //texture{WoodTexture}
     translate<27.5+DeskDrawerWidth,0,littleWindowLedgeLength+DeskLength-20>
 }
 
@@ -411,18 +549,18 @@ background {
 #declare BookShelfBox = box {
     <0,0,0>
     <BookShelfWidth,BookShelfHeight,BookShelfLength>
-    texture{pigment{color Brown}}
+    texture{WoodTexture}
 }
 #declare GapBox = box {
     <0,0,0>
     <BookShelfWidth-2, BookShelfGapHeight, GapDepth>
-    //texture{pigment{rgbt<1,1,1,1>}}
+    texture{pigment{rgbt<1,1,1,1>}}
 }
 #declare BookShelfDivider = box {
     <0,0,0>
     <BookShelfWidth,DividerHeight,BookShelfLength>
     translate<0,BookShelfGapHeight,0>
-    //texture{pigment{color Brown}}
+    texture{WoodTexture}
 }
 #declare BookShelfOpen = difference {
     object {
@@ -446,7 +584,6 @@ background {
     }
     rotate<0,90,0>
     translate<BookShelfLength,0.25,250>
-    texture{pigment{color Brown}}
 }
 
 //------------------------------Time for the mirrors, map, posters, and flag
@@ -500,7 +637,7 @@ background {
     <MapWidth,MapHeight,0.25>
     rotate<0,90,0>
     translate<0.5, PostersDistanceFromGround-10, 150>
-    texture{pigment{color Yellow}}
+    texture{MapTexture}
 }
 #declare Poster = box {
     <0,0,0>
@@ -513,7 +650,7 @@ background {
     <FlagWidth,FlagHeight,0.5>
     rotate<0,90,0>
     translate<RoomWidth-0.75, PostersDistanceFromGround-30, 200>
-    texture{pigment{color Red}}
+    texture{FlagTexture}
 }
 
 //---------------------------The bed: the hardest part of the room besides the tree
@@ -521,7 +658,7 @@ background {
 #declare MetalFrameBox = box {
     <0,0,0>
     <BedWidth+5,MetalFrameHeight,BedLength>
-    texture{pigment{color Black}}
+    texture{MetalFrameTexture}
 }
 #declare MetalFrameCutout = box {
     <0,0,0>
@@ -544,7 +681,7 @@ background {
         #declare i = i + 20;
     #end
     translate<0,7,5>
-    texture{pigment{color Black}}    
+    texture{MetalFrameTexture}    
 }
 #declare MetalFrameFrame = difference {
     object {
@@ -631,7 +768,7 @@ background {
         FrameBar
         translate<0,3*FrameBarGapSpace,BedLength+13>
     }
-    texture{pigment{color Brown}}
+    texture{WoodTexture}
     
 }
 //the mattress
@@ -642,7 +779,7 @@ background {
         3
     )
     translate<RoomWidth-BedWidth-9,BedDistanceFromGround+MetalFrameHeight+1,littleWindowLedgeLength+10>
-    texture{pigment{rgb<0.4,0.3,0.4>}}
+    texture{MattressTexture}
 }
 #declare Comforter = union {
     object {
@@ -668,7 +805,7 @@ background {
         )
         translate<0,-8,0>
     }
-    texture{pigment{color Orange}}
+    texture{BlanketTexture}
     translate<RoomWidth-BedWidth-11, BedDistanceFromGround+MetalFrameHeight+MattressHeight+3,littleWindowLedgeLength+10>
 }
 
@@ -699,7 +836,12 @@ background {
     }
     object {
         Pillow
-        texture{pigment{color Orange}}
+        texture {
+            BlanketTexture
+            scale 0.8
+            rotate<0,90,0>
+            translate<-40,0,0>
+        }
         rotate<30,0,0>
         translate<RoomWidth-BedWidth+10,PostersDistanceFromGround-42,littleWindowLedgeLength+25>
     }
@@ -715,14 +857,6 @@ background {
                                                                
 //Look at the door, camera must be by the window                                                               
 #declare DoorwayView = <HalfRoomWidth, SeatedEyeHeight, RoomLength>;
-
-/*
-global_settings {
-    radiosity {
-        Rad_Settings(Radiosity_Default,off,off)
-    }
-}
-*/
 
 //camera
 camera {
@@ -773,9 +907,7 @@ light_source {
         texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     texture {
-        pigment {
-            rgb<0.5,0.5,0.5>
-        }
+        WallTexture
     }
 }
 
@@ -786,11 +918,11 @@ light_source {
     }
     object {
         Closet
-        texture{pigment{rgb<0.5,0.5,0.5>}}
+        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         OpenDoor
-        texture{pigment{rgb<0.5,0.5,0.5>}}
+        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         littleWindowLedge

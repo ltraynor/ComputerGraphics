@@ -29,6 +29,11 @@ light_source {
     rgb<1,1,1>
 }
 
+
+#declare TreeTexture = texture {
+    uv_mapping pigment{image_map{jpeg "treeTexture"}}
+    scale 20
+}
  
 
 #declare treeMeshStart = mesh2 { 
@@ -292,16 +297,19 @@ light_source {
             specular 0.3 
             roughness 0.05
         }
+        
+        //TreeTexture
     }
 }
-
 
 #declare theTree = union {
     object {
         treeTrunk
+        //texture{TreeTexture}
     }
     object {
         RoootsFinal
+        texture{TreeTexture}
     }
     object {
         Branches

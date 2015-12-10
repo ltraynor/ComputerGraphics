@@ -1,5 +1,6 @@
 #include "colors.inc"
-#include "rootFileForTree.inc" 
+#include "rootFileForTree.inc"
+#include "glowingSpheresFile.inc" 
 
 background {
     rgb<0,1,1>
@@ -22,12 +23,12 @@ camera {
 }
 
 
-/*
+
 light_source {
     <0,100,200>
     rgb<1,1,1>
 }
-*/
+
  
 
 #declare treeMeshStart = mesh2 { 
@@ -305,6 +306,9 @@ light_source {
     object {
         Branches
         translate<5,70,-19>
+    }
+    object {
+        Spores
     }    
 }
 
