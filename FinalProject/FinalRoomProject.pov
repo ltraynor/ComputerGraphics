@@ -919,10 +919,10 @@ background {
 
 //camera, lots of them for easy view switch
 camera {
-    location WindowView
-    look_at DoorwayView
-    //location DoorwayView
-    //look_at WindowView 
+    //location WindowView
+    //look_at DoorwayView
+    location DoorwayView
+    look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
     //location<RoomWidth-BedWidth,220,BedLength>
