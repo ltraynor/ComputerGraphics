@@ -1,40 +1,18 @@
+/*
+ *  Logan Traynor
+ *  12/10/15
+ *  rootFileForTree.inc - this is the file that started it all... my despairm but
+ *      also my glory. I mean the tree didn't come out all that grand but the 
+ *      roots look freaking awesome. Anyway I wish there was some way I could have
+ *      automated this,and believe me I tried, but ultimately I had to manually do 
+ *      everything so that it looked good. Used to be a stand alone file, now 
+ *      edited to be an include file.
+*/
+
 #include "colors.inc"
 
-/*
-background {
-    rgb<0,1,1>
-}
-*/
 
-/*
-camera {
-    location <-1300, 1300, 1000>
-    look_at <-300,300,0>
-}
-*/
-
-
-/*
-camera {
-    location <-300, 650, -500>
-    look_at <-300,300,0>
-}
-*/
-
-/*
-light_source {
-    <0,10000,0>
-    rgb<1,1,1>
-}
-*/
-
-/*
-light_source {
-    <0,-10000,0>
-    rgb<1,1,1>
-}
-*/
-
+//the first piece...
 #declare rootBase = lathe {
     linear_spline 
     4
@@ -42,7 +20,7 @@ light_source {
     <85, 180>, <75, 200>
 }
 
-
+//the second piece....
 #declare rootPiece1 = lathe {
     linear_spline
     4
@@ -51,7 +29,7 @@ light_source {
     rotate <0,0,15>
 }
 
-
+//make it look more rooty
 #declare rootWarpTransform = transform {
     matrix <1,1,0,  //a11 a12 a13
             0,1,0,  //a21 a22 a23
@@ -59,11 +37,13 @@ light_source {
             0,0,0>  //a14 a24 a34
 }
 
+//to make the demensions a little better
 #declare rootScaleTransform = transform {
     scale<0.65,0.9,0.65>
 }
 
 
+//the first unit of root
 #declare Roots = merge {
     object {
         rootBase
@@ -79,6 +59,7 @@ light_source {
     }
 }
 
+//and it just builds on itself from there....
 #declare rootPiece2 = object {
     object {
         Roots
@@ -163,18 +144,14 @@ light_source {
     }
 }
 
+
+//this next part is an attempt to condense all the stupid annoyance of above
 #declare Roots2 = merge {
     object {
         Roots
     }
     object {
         rootPiece2
-    /*
-        Roots
-        transform{rootScaleTransform}
-        rotate<0,0,20>
-        translate<-40,335,0>
-    */
     }
 }
 
@@ -223,7 +200,9 @@ light_source {
     }
 }
         
-        
+
+
+//now we switch to segments to try and simplify even more.....        
 #declare rootSegment1 = object {
     object {
         Roots3
@@ -245,6 +224,8 @@ light_source {
     }
 }
 
+
+//this is a single root. I apologize for the awful naming conventions
 #declare rooots = merge {
     object {
         rootSegment1
@@ -257,6 +238,7 @@ light_source {
     }
 }
 
+//the multiple roots to be attached to the tree
 #declare RoootsFinal = union {
     object {
         rooots
@@ -287,14 +269,3 @@ light_source {
         translate<-10,-10,-25>
     }    
 }
-
-
-/*
-object {
-    rooots
-    //Roots7
-    //rotate <-90,0,0>
-    transform{rootWarpTransform}
-    //scale<1,1.2,1>
-}
-*/

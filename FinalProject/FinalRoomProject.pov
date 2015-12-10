@@ -1,9 +1,27 @@
+/*
+ *  Logan Traynor 
+ *  12/10/12
+ *  FinalRoomProject.pov - this is my final project for Computer Graphics.
+ *      It is my dorm room, except there is a cool tree in my closet with
+ *      magic spores that glow. This project kicked me in the ass. I will
+ *      talk about the tree in the tree file but i really did a poor job
+ *      with the textures. Some of them are spot on (thats how my comforter
+ *      and pillow actually look, actually the whole bed is great) that 
+ *      being said I am not great at making anything look terribly realistic.
+ *      Another thing I should mention is that a lot of objects or textures
+ *      have very specific translations or rotations not given by solely
+ *      variables. This is because for some reason (I guess my measurements
+ *      were a little off) but nothing really lined up correctly so that was
+ *      my way of correcting things.
+*/
+
+
 #include "colors.inc"
 #include "shapes.inc"
 #include "treeFile.inc"
  
 background {
-    rgb<0,1,1>
+    rgb<0.05,0.3,0.3>
 }
 
 
@@ -286,7 +304,7 @@ background {
         ambient 0
         specular 0.6
         roughness 0.005
-        reflection {0.01, 0.75 fresnel on}
+        reflection {0.1, 1.0 fresnel on}
         conserve_energy
     }
 }
@@ -398,7 +416,7 @@ background {
     translate<0,RadiatorDistanceFromGround,0>
 }
 
-//-----------------------------------Let's make the desk!
+//---------------------------------------------Let's make the desk!
 #declare deskBox = box {
         <0,0,0>
         <DeskWidth,DeskHeight,DeskLength>
@@ -485,8 +503,6 @@ background {
     <0,curtainTubeLength,0>
     curtainTubeRadius
     texture{CurtainTexture}
-    //rotate<0,0,90>
-    //translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
 }
 #declare Curtains = union {
     object {
@@ -498,7 +514,6 @@ background {
         scale<1,0.67,1>
         translate<0,curtainTubeLength+57,0>
     }
-    //texture{pigment{color Orange}}
     rotate<0,0,90>
     translate<RoomWidth-2,WindowHeight+WindowDistanceFromGround,curtainTubeRadius>
 }
@@ -537,7 +552,6 @@ background {
         <0,0,0>
         <ChairWidth/2,0,0>
         4   //radius
-        //rotate<0,0,90>
         scale 3/2
         translate<6,1.5,0>
         texture{pigment{rgbt<1,1,1,1>}}
@@ -546,8 +560,7 @@ background {
 }
 #declare ChairLegConnector = box {
     <0,0,0>
-    <ChairLegConnectorWidth,ChairLegConnectorHeight,ChairBaseLength - 2*ChairLegWidth>
-    //translate<1,0,2> 
+    <ChairLegConnectorWidth,ChairLegConnectorHeight,ChairBaseLength - 2*ChairLegWidth> 
     texture{darkWoodTexture}
 }
 #declare ChairConnectorConnector = box {
@@ -591,7 +604,6 @@ background {
     object {
         ChairConnectorConnector
     }
-   //texture{WoodTexture}
     translate<27.5+DeskDrawerWidth,0,littleWindowLedgeLength+DeskLength-20>
 }
 
@@ -775,22 +787,18 @@ background {
 #declare Frame = union {
     object {
         FramePost
-        //translate<RoomWidth-BedWidth-15,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
         translate<BedWidth,0,BedLength+13>
     }
     object {
         FramePost
-        //translate<RoomWidth-BedWidth-15,0,littleWindowLedgeLength+5>
         translate<BedWidth,0,0>
     }
     object {
         FramePost
-        //translate<RoomWidth-9,0,littleWindowLedgeLength+5>
         translate<0,0,BedLength+13>
     }
     object {
         FramePost
-        //translate<RoomWidth-10,0,BedLength+littleWindowLedgeLength+5+FramePostWidth>
         translate<0,0,0>
     }
     object {
@@ -858,12 +866,14 @@ background {
     translate<RoomWidth-BedWidth-11, BedDistanceFromGround+MetalFrameHeight+MattressHeight+3,littleWindowLedgeLength+10>
 }
 
+//the pillow
 #declare Pillow = Round_Box_Union (
     <PillowWidth,0,0>
     <0,PillowHeight,PillowLength>
     4
 )
 
+//the bed in all its glory
 #declare Bed = union {
     object {
         MetalFrame
@@ -907,12 +917,12 @@ background {
 //Look at the door, camera must be by the window                                                               
 #declare DoorwayView = <HalfRoomWidth, SeatedEyeHeight, RoomLength>;
 
-//camera
+//camera, lots of them for easy view switch
 camera {
     location WindowView
     look_at DoorwayView
-    //location DoorwayView
-    //look_at WindowView 
+    location DoorwayView
+    look_at WindowView 
     //location<100,200,150>
     //look_at<RoomWidth,100,10>
     //location<RoomWidth-BedWidth,220,BedLength>
@@ -921,14 +931,12 @@ camera {
 
 
 //light source
+//the spores needed some assitance with their light :p
 light_source {
-    <HalfRoomWidth,SeatedEyeHeight,HalfRoomLength>
-    rgb<1,1,1>
-}
-
-light_source {
-    <HalfRoomWidth,100,HalfRoomLength>
-    rgb<1,1,1>
+    <RoomWidth-60,125,RoomLength>
+    rgb<1,1,0>
+    fade_distance 100
+    fade_power 2
 }
 
  
@@ -967,11 +975,9 @@ light_source {
     }
     object {
         Closet
-        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         OpenDoor
-        //texture{pigment{rgb<0.5,0.5,0.5>}}
     }
     object {
         Window
@@ -1026,7 +1032,7 @@ light_source {
 
 //-----------------------------------------------------------------------//
 
-
+/*
 merge {
     object {
         myRoom
@@ -1039,9 +1045,9 @@ merge {
         
     }
 }
+*/
 
-/*
 object {
     myRoom
 }
-*/
+

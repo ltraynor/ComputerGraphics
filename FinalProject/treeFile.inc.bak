@@ -2,6 +2,7 @@
 #include "rootFileForTree.inc"
 #include "glowingSpheresFile.inc" 
 
+/*
 background {
     rgb<0,1,1>
 }
@@ -28,7 +29,7 @@ light_source {
     <0,100,200>
     rgb<1,1,1>
 }
-
+*/
  
 
 #declare treeMeshStart = mesh2 { 

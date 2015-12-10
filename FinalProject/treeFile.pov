@@ -1,3 +1,10 @@
+/*
+ *  Logan Traynor
+ *  12/10/15
+ *  tree
+
+*/
+
 #include "colors.inc"
 #include "rootFileForTree.inc"
 #include "glowingSpheresFile.inc" 

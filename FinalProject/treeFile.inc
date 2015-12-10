@@ -1,37 +1,28 @@
+/*
+ *  Logan Traynor
+ *  12/10/15
+ *  treeFile.inc - yea honestly Im not even sure how much there is to say. 
+ *      I think the roots look awesome and I spent a lot of time on the trunk,
+ *      which is also cool, but I got lazy with the branches and just made 
+ *      them smaller trunks which just looks like shit. I also could not find
+ *      a way to automate everything (I did what I could, i.e. the trunk) but
+ *      again everything is subject to meticulous manual translations and 
+ *      rotations. Woulda had more leaves and spores if I could have figured
+ *      out how to automate that junk. Ah well, hopefully someone thinks its cool.
+ *      ALSO. I had huge problems trying to texture this tree. Nothing worked.
+ *      Literally nothing except for the stupid brown texture I have on it now.
+ *      The roots would change texture though, just not the trunk or the branches.
+ *      So I really have no idea what was up with that but it was a point of great 
+ *      frustration.
+*/
+
+
 #include "colors.inc"
 #include "rootFileForTree.inc"
 #include "glowingSpheresFile.inc" 
-
-/*
-background {
-    rgb<0,1,1>
-}
-
-
-camera {
-    location<-50,50,200>
-    look_at<0,30,0>
-    //location<1,200,0>
-    //look_at<1,0,0>
-    //location<-100,50,0>
-    //look_at<0,30,0>
-    //location<0,300,0>
-    //look_at<0,0,0>
-    //location<-20,20,100>
-    //look_at<-20,20,30>
-    //location<0,20,0>
-    //look_at<0,0,0>
-}
-
-
-
-light_source {
-    <0,100,200>
-    rgb<1,1,1>
-}
-*/
  
 
+//makes a line of triangles that is the very first piece of the tree trunk
 #declare treeMeshStart = mesh2 { 
     vertex_vectors {
         10
@@ -60,6 +51,7 @@ light_source {
     
 }
 
+//this is the mesh used for the rudimentary leaves on my tree
 #declare leafMesh = mesh2 {
     vertex_vectors {
         4
@@ -76,6 +68,9 @@ light_source {
     }    
 }
 
+
+//this stacks some mesh-lines on top of one another, to make them in bulk
+//is the next level of hierarchy in my tree.
 #declare treeMeshUnit = union {
     object {
         treeMeshStart
@@ -96,6 +91,9 @@ light_source {
     }
 }
 
+
+//the treeMeshPiece is the foundation of the tree. It is pretty much a
+//jagged ring of lots and lots of treeMeshUnits that looks kinda cool
 #declare treeMeshPiece = union {
     object {
         treeMeshUnit
@@ -202,6 +200,8 @@ light_source {
     }
 }
 
+//yay! the automated part! takes the ring of tree and stacks it into
+// an offset cylinder (was hoping to make it look more realistic)
 #declare treeTrunk = union {
     #declare Index = 0;
     #while (Index < 10)
@@ -225,6 +225,7 @@ light_source {
 }
 
 
+//ah the branch, the ugliest part of the tree
 #declare branch = merge {
     object {
         treeTrunk
@@ -238,6 +239,7 @@ light_source {
     }
 }
 
+//this union of leaves will go on every branch
 #declare Leaves = union {
     object {
         leafMesh
@@ -264,6 +266,7 @@ light_source {
     }
 }
 
+//make the branch with leaves....
 #declare BranchWithLeaves = union {
     object {
         branch
@@ -275,6 +278,8 @@ light_source {
     }
 }
 
+
+//and make a ring of branches to stick out of the top of my tree
 #declare Branches = union {
     #declare Index = 0;
     #while (Index < 360)
@@ -296,7 +301,7 @@ light_source {
     }
 }
 
-
+//and finally wombo jumbo
 #declare theTree = union {
     object {
         treeTrunk
@@ -309,12 +314,8 @@ light_source {
         translate<5,70,-19>
     }
     object {
+        //these are magic and they glow and thats all you need to know
         Spores
     }    
 }
 
-/*
-object {
-    theTree
-}
-*/
